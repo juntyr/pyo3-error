@@ -1,0 +1,45 @@
+[package]
+name = "pyo3-error"
+version = "0.1.0"
+edition = "2021"
+authors = ["Juniper Tyree <juniper.tyree@helsinki.fi>"]
+repository = "https://github.com/juntyr/pyo3-error"
+license = "MPL-2.0"
+# rust-version = "1.76"
+
+# description = ""
+readme = "README.md"
+# categories = []
+# keywords = []
+
+[dependencies]
+pyo3 = { version = "0.21", default-features = false }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+unstable_features = "forbid"
+unused_crate_dependencies = "warn"
+
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+complexity = { priority = -1, level = "warn" }
+correctness = { priority = -1, level = "warn" }
+nursery = { priority = -1, level = "warn" }
+pedantic = { priority = -1, level = "warn" }
+perf = { priority = -1, level = "warn" }
+style = { priority = -1, level = "warn" }
+suspicious = { priority = -1, level = "warn" }
+
+unwrap_used = "warn"
+expect_used = "warn"
+indexing_slicing = "warn"
+panic = "warn"
+todo = "warn"
+unimplemented = "warn"
+unreachable = "warn"
+module_name_repetitions = "allow"
+
+cargo = { priority = -1, level = "warn" }
+cargo_common_metadata = "warn"
+multiple_crate_versions = "warn"
