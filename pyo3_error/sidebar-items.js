@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["add"]};
+window.SIDEBAR_ITEMS = {"fn":["err_with_location"],"struct":["DowncastToPyErr","ErrorNoPyErr","IoErrorToPyErr","PyErrChain"],"trait":["AnyErrorToPyErr","MapErrorToPyErr"]};
