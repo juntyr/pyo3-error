@@ -551,6 +551,21 @@ except Exception as err:
                 "Traceback (most recent call last):\n  File \"foo.rs\", line 27, in <module>\n",
             );
             assert!(err.cause(py).is_none());
+
+            let err = err_with_location(py, err, "bar.rs", 24, 18);
+
+            assert_eq!(format!("{err}"), "Exception: oh no");
+            assert_eq!(
+                err.traceback_bound(py)
+                    .expect("must have traceback")
+                    .format()
+                    .expect("traceback must be formattable"),
+                r#"Traceback (most recent call last):
+  File "bar.rs", line 24, in <module>
+  File "foo.rs", line 27, in <module>
+"#,
+            );
+            assert!(err.cause(py).is_none());
         })
     }
 }
