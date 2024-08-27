@@ -49,9 +49,13 @@ impl PyErrChain {
     ///
     /// If you want to customize the translation from [`std::error::Error`] into
     /// [`PyErr`], please use [`Self::new_with_translator`] instead.
+    ///
+    /// This constructor is equivalent to chaining [`Self::pyerr_from_err`] with
+    /// [`Self::from_pyerr`].
     #[must_use]
+    #[inline]
     pub fn new<T: Error + 'static>(py: Python, err: T) -> Self {
-        Self::new_with_translator::<T, ErrorNoPyErr, DowncastToPyErr>(py, err)
+        Self::from_pyerr(py, Self::pyerr_from_err(py, err))
     }
 
     /// Create a new [`PyErrChain`] from `err` using a custom translator from
@@ -63,83 +67,138 @@ impl PyErrChain {
     ///
     /// If any error in the chain is a [`PyErrChain`] or a [`PyErr`], it is
     /// extracted directly. All other error types first attempt to be translated
-    /// into [`PyErr`]s using the [`PyErrDowncaster`] and [`PyErrMapper`]. As a
-    /// fallback, all remaining errors are translated into [`PyErr`]s using
+    /// into [`PyErr`]s using the [`AnyErrorToPyErr`] and [`MapErrorToPyErr`].
+    /// As a fallback, all remaining errors are translated into [`PyErr`]s using
     /// [`PyException::new_err`] with `format!("{}", err)`.
+    ///
+    /// This constructor is equivalent to chaining
+    /// [`Self::pyerr_from_err_with_translator`] with [`Self::from_pyerr`].
     #[must_use]
+    #[inline]
     pub fn new_with_translator<E: Error + 'static, T: AnyErrorToPyErr, M: MapErrorToPyErr>(
         py: Python,
         err: E,
     ) -> Self {
+        Self::from_pyerr(py, Self::pyerr_from_err_with_translator::<E, T, M>(py, err))
+    }
+
+    /// Transform an `err` implementing [`std::error::Error`] into a [`PyErr`]
+    /// that preserves the error's causality chain.
+    ///
+    /// The error's causality chain, as expressed by
+    /// [`std::error::Error::source`], is translated into a [`PyErr::cause`]
+    /// chain.
+    ///
+    /// If any error in the chain is a [`PyErrChain`] or a [`PyErr`], it is
+    /// extracted directly. All other error types are translated into [`PyErr`]s
+    /// using [`PyException::new_err`] with `format!("{}", err)`.
+    ///
+    /// If you want to customize the translation from [`std::error::Error`] into
+    /// [`PyErr`], please use [`Self::pyerr_from_err_with_translator`] instead.
+    #[must_use]
+    #[inline]
+    pub fn pyerr_from_err<T: Error + 'static>(py: Python, err: T) -> PyErr {
+        Self::pyerr_from_err_with_translator::<T, ErrorNoPyErr, DowncastToPyErr>(py, err)
+    }
+
+    /// Transform an `err` implementing [`std::error::Error`] into a [`PyErr`]
+    /// that preserves the error's causality chain using a custom translator.
+    ///
+    /// The error's causality chain, as expressed by
+    /// [`std::error::Error::source`], is translated into a [`PyErr::cause`]
+    /// chain.
+    ///
+    /// If any error in the chain is a [`PyErrChain`] or a [`PyErr`], it is
+    /// extracted directly. All other error types first attempt to be translated
+    /// into [`PyErr`]s using the [`AnyErrorToPyErr`] and [`MapErrorToPyErr`].
+    /// As a fallback, all remaining errors are translated into [`PyErr`]s using
+    /// [`PyException::new_err`] with `format!("{}", err)`.
+    #[must_use]
+    pub fn pyerr_from_err_with_translator<
+        E: Error + 'static,
+        T: AnyErrorToPyErr,
+        M: MapErrorToPyErr,
+    >(
+        py: Python,
+        err: E,
+    ) -> PyErr {
         let err: Box<dyn Error + 'static> = Box::new(err);
 
-        let err = match err.downcast::<Self>() {
-            Ok(err) => return *err,
+        let err = match M::try_map(py, err, |err: Box<Self>| err.into_pyerr()) {
+            Ok(err) => return err,
+            Err(err) => err,
+        };
+        let err = match M::try_map(py, err, |err: Box<PyErr>| *err) {
+            Ok(err) => return err,
             Err(err) => err,
         };
 
-        let err = match err.downcast::<PyErr>() {
-            Ok(err) => return Self::from(*err),
-            Err(err) => err,
-        };
-
-        let mut stack = Vec::new();
+        let mut chain = Vec::new();
 
         let mut source = err.source();
         let mut cause = None;
 
         while let Some(err) = source.take() {
-            if let Some(err) = err.downcast_ref::<Self>() {
-                let mut err = err.clone_ref(py);
-                cause = err.cause.take();
-                stack.push(err);
+            if let Some(err) = M::try_map_ref(py, err, |err: &Self| err.as_pyerr().clone_ref(py)) {
+                cause = err.cause(py);
+                chain.push(err);
                 break;
             }
-
-            if let Some(err) = err.downcast_ref::<PyErr>() {
-                let mut err = Self::from(err.clone_ref(py));
-                cause = err.cause.take();
-                stack.push(err);
+            if let Some(err) = M::try_map_ref(py, err, |err: &PyErr| err.clone_ref(py)) {
+                cause = err.cause(py);
+                chain.push(err);
                 break;
             }
 
             source = err.source();
-            stack.push(Self {
-                #[allow(clippy::option_if_let_else)]
-                err: match T::try_from_err_ref::<M>(py, err) {
-                    Some(err) => err,
-                    None => PyException::new_err(format!("{err}")),
-                },
-                cause: None,
+
+            #[allow(clippy::option_if_let_else)]
+            chain.push(match T::try_from_err_ref::<M>(py, err) {
+                Some(err) => err,
+                None => PyException::new_err(format!("{err}")),
             });
         }
 
-        while let Some(mut err) = stack.pop() {
-            err.cause = cause.take();
-            err.err.set_cause(
-                py,
-                err.cause
-                    .as_deref()
-                    .map(|cause| cause.as_err().clone_ref(py)),
-            );
-            cause = Some(Box::new(err));
+        while let Some(err) = chain.pop() {
+            err.set_cause(py, cause.take());
+            cause = Some(err);
         }
 
         let err = match T::try_from_err::<M>(py, err) {
             Ok(err) => err,
             Err(err) => PyException::new_err(format!("{err}")),
         };
-        err.set_cause(
-            py,
-            cause.as_deref().map(|cause| cause.as_err().clone_ref(py)),
-        );
+        err.set_cause(py, cause);
+
+        err
+    }
+
+    /// Wrap a [`PyErr`] and capture its causality chain, as expressed by
+    /// [`PyErr::cause`].
+    #[must_use]
+    pub fn from_pyerr(py: Python, err: PyErr) -> Self {
+        let mut chain = Vec::new();
+
+        let mut cause = err.cause(py);
+
+        while let Some(err) = cause.take() {
+            cause = err.cause(py);
+            chain.push(Self { err, cause: None });
+        }
+
+        let mut cause = None;
+
+        while let Some(mut err) = chain.pop() {
+            err.cause = cause.take();
+            cause = Some(Box::new(err));
+        }
 
         Self { err, cause }
     }
 
     /// Extract the wrapped [`PyErr`].
     #[must_use]
-    pub fn into_err(self) -> PyErr {
+    pub fn into_pyerr(self) -> PyErr {
         self.err
     }
 
@@ -149,7 +208,7 @@ impl PyErrChain {
     /// [`PyErr`], the change in causality chain will not be reflected in
     /// this [`PyErrChain`].
     #[must_use]
-    pub const fn as_err(&self) -> &PyErr {
+    pub const fn as_pyerr(&self) -> &PyErr {
         &self.err
     }
 
@@ -160,7 +219,7 @@ impl PyErrChain {
     /// this [`PyErrChain`].
     #[must_use]
     pub fn cause(&self) -> Option<&PyErr> {
-        self.cause.as_deref().map(Self::as_err)
+        self.cause.as_deref().map(Self::as_pyerr)
     }
 
     /// Clone the [`PyErrChain`].
@@ -217,31 +276,13 @@ impl Error for PyErrChain {
 
 impl From<PyErr> for PyErrChain {
     fn from(err: PyErr) -> Self {
-        Python::with_gil(|py| {
-            let mut stack = Vec::new();
-
-            let mut cause = err.cause(py);
-
-            while let Some(err) = cause.take() {
-                cause = err.cause(py);
-                stack.push(Self { err, cause: None });
-            }
-
-            let mut cause = None;
-
-            while let Some(mut err) = stack.pop() {
-                err.cause = cause.take();
-                cause = Some(Box::new(err));
-            }
-
-            Self { err, cause }
-        })
+        Python::with_gil(|py| Self::from_pyerr(py, err))
     }
 }
 
 impl From<PyErrChain> for PyErr {
     fn from(err: PyErrChain) -> Self {
-        err.err
+        err.into_pyerr()
     }
 }
 
@@ -367,7 +408,7 @@ impl AnyErrorToPyErr for IoErrorToPyErr {
                 }
 
                 if let Some(err) = err.downcast_ref::<PyErrChain>() {
-                    return err.as_err().clone_ref(py);
+                    return err.as_pyerr().clone_ref(py);
                 }
             }
 
@@ -542,21 +583,47 @@ except Exception as err:
         Python::with_gil(|py| {
             let err = err_with_location(py, PyException::new_err("oh no"), "foo.rs", 27, 15);
 
+            // check the message, location traceback, and cause for the root error
             assert_eq!(format!("{err}"), "Exception: oh no");
             assert_eq!(
                 err.traceback_bound(py)
                     .expect("must have traceback")
                     .format()
                     .expect("traceback must be formattable"),
-                "Traceback (most recent call last):\n  File \"foo.rs\", line 27, in <module>\n",
+                r#"Traceback (most recent call last):
+  File "foo.rs", line 27, in <module>
+"#,
             );
             assert!(err.cause(py).is_none());
 
+            // add an extra level of location traceback to the root error
             let err = err_with_location(py, err, "bar.rs", 24, 18);
 
-            assert_eq!(format!("{err}"), "Exception: oh no");
+            // create a new top-level error, caused by the root error
+            let top = PyException::new_err("oh yes");
+            top.set_cause(py, Some(err));
+            let err = err_with_location(py, top, "baz.rs", 41, 1);
+
+            // check the message and location traceback for the top-level error
+            assert_eq!(format!("{err}"), "Exception: oh yes");
             assert_eq!(
                 err.traceback_bound(py)
+                    .expect("must have traceback")
+                    .format()
+                    .expect("traceback must be formattable"),
+                r#"Traceback (most recent call last):
+  File "baz.rs", line 41, in <module>
+"#,
+            );
+
+            // ensure that the top-level error has a cause
+            let cause = err.cause(py).expect("must have a cause");
+
+            // check the message, extended location traceback, and cause for the root error
+            assert_eq!(format!("{cause}"), "Exception: oh no");
+            assert_eq!(
+                cause
+                    .traceback_bound(py)
                     .expect("must have traceback")
                     .format()
                     .expect("traceback must be formattable"),
@@ -565,7 +632,7 @@ except Exception as err:
   File "foo.rs", line 27, in <module>
 "#,
             );
-            assert!(err.cause(py).is_none());
+            assert!(cause.cause(py).is_none());
         })
     }
 }
