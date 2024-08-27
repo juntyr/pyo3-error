@@ -137,22 +137,10 @@ impl PyErrChain {
         Self { err, cause }
     }
 
-    /// Clone the [`PyErrChain`].
-    ///
-    /// This requires the GIL, which is why [`PyErrChain`] does not implement
-    /// [`Clone`].
-    ///
-    /// Note that all elements of the cloned [`PyErrChain`] will be shared using
-    /// reference counting in Python with the existing [`PyErrChain`] `self`.
+    /// Extract the wrapped [`PyErr`].
     #[must_use]
-    pub fn clone_ref(&self, py: Python) -> Self {
-        Self {
-            err: self.err.clone_ref(py),
-            cause: self
-                .cause
-                .as_ref()
-                .map(|cause| Box::new(cause.clone_ref(py))),
-        }
+    pub fn into_err(self) -> PyErr {
+        self.err
     }
 
     /// Get a reference to the wrapped [`PyErr`].
@@ -173,6 +161,24 @@ impl PyErrChain {
     #[must_use]
     pub fn cause(&self) -> Option<&PyErr> {
         self.cause.as_deref().map(Self::as_err)
+    }
+
+    /// Clone the [`PyErrChain`].
+    ///
+    /// This requires the GIL, which is why [`PyErrChain`] does not implement
+    /// [`Clone`].
+    ///
+    /// Note that all elements of the cloned [`PyErrChain`] will be shared using
+    /// reference counting in Python with the existing [`PyErrChain`] `self`.
+    #[must_use]
+    pub fn clone_ref(&self, py: Python) -> Self {
+        Self {
+            err: self.err.clone_ref(py),
+            cause: self
+                .cause
+                .as_ref()
+                .map(|cause| Box::new(cause.clone_ref(py))),
+        }
     }
 }
 
