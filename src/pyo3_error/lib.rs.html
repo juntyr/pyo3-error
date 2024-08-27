@@ -598,10 +598,10 @@
     /// using [`PyException::new_err`] with `format!("{}", err)`.
     ///
     /// If you want to customize the translation from [`std::error::Error`] into
-    /// [`PyErr`], please use [`Self::new_with_downcaster`] instead.
+    /// [`PyErr`], please use [`Self::new_with_translator`] instead.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new&lt;T: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;(py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>, err: T) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::new_with_downcaster::&lt;T, <a href="#312">ErrorNoPyErr</a>, <a href="#375">DowncastToPyErr</a>&gt;(<a href="#53">py</a>, <a href="#53">err</a>)
+        <span class="self">Self</span>::new_with_translator::&lt;T, <a href="#312">ErrorNoPyErr</a>, <a href="#375">DowncastToPyErr</a>&gt;(<a href="#53">py</a>, <a href="#53">err</a>)
     }
 
     <span class="doccomment">/// Create a new [`PyErrChain`] from `err` using a custom translator from
@@ -617,7 +617,7 @@
     /// fallback, all remaining errors are translated into [`PyErr`]s using
     /// [`PyException::new_err`] with `format!("{}", err)`.
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new_with_downcaster&lt;E: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>, T: <a href="#247-275">AnyErrorToPyErr</a>, M: <a href="#282-308">MapErrorToPyErr</a>&gt;(
+    </span><span class="kw">pub fn </span>new_with_translator&lt;E: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>, T: <a href="#247-275">AnyErrorToPyErr</a>, M: <a href="#282-308">MapErrorToPyErr</a>&gt;(
         py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
         err: E,
     ) -&gt; <span class="self">Self </span>{
