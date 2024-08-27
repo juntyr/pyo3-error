@@ -16,6 +16,7 @@ keywords = ["error", "source", "cause", "chain", "python"]
 pyo3 = { version = "0.21", default-features = false }
 
 [dev-dependencies]
+anyhow = { version = "1.0", default-features = false, features = ["std"] }
 pyo3 = { version = "0.21", default-features = false, features = ["auto-initialize"] }
 
 [lints.rust]

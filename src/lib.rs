@@ -54,7 +54,7 @@ impl PyErrChain {
     /// [`Self::from_pyerr`].
     #[must_use]
     #[inline]
-    pub fn new<T: Error + 'static>(py: Python, err: T) -> Self {
+    pub fn new<T: Into<Box<dyn Error + 'static>>>(py: Python, err: T) -> Self {
         Self::from_pyerr(py, Self::pyerr_from_err(py, err))
     }
 
@@ -75,7 +75,11 @@ impl PyErrChain {
     /// [`Self::pyerr_from_err_with_translator`] with [`Self::from_pyerr`].
     #[must_use]
     #[inline]
-    pub fn new_with_translator<E: Error + 'static, T: AnyErrorToPyErr, M: MapErrorToPyErr>(
+    pub fn new_with_translator<
+        E: Into<Box<dyn Error + 'static>>,
+        T: AnyErrorToPyErr,
+        M: MapErrorToPyErr,
+    >(
         py: Python,
         err: E,
     ) -> Self {
@@ -97,7 +101,7 @@ impl PyErrChain {
     /// [`PyErr`], please use [`Self::pyerr_from_err_with_translator`] instead.
     #[must_use]
     #[inline]
-    pub fn pyerr_from_err<T: Error + 'static>(py: Python, err: T) -> PyErr {
+    pub fn pyerr_from_err<T: Into<Box<dyn Error + 'static>>>(py: Python, err: T) -> PyErr {
         Self::pyerr_from_err_with_translator::<T, ErrorNoPyErr, DowncastToPyErr>(py, err)
     }
 
@@ -115,14 +119,14 @@ impl PyErrChain {
     /// [`PyException::new_err`] with `format!("{}", err)`.
     #[must_use]
     pub fn pyerr_from_err_with_translator<
-        E: Error + 'static,
+        E: Into<Box<dyn Error + 'static>>,
         T: AnyErrorToPyErr,
         M: MapErrorToPyErr,
     >(
         py: Python,
         err: E,
     ) -> PyErr {
-        let err: Box<dyn Error + 'static> = Box::new(err);
+        let err: Box<dyn Error + 'static> = err.into();
 
         let err = match M::try_map(py, err, |err: Box<Self>| err.into_pyerr()) {
             Ok(err) => return err,
@@ -633,6 +637,24 @@ except Exception as err:
 "#,
             );
             assert!(cause.cause(py).is_none());
+        })
+    }
+
+    #[test]
+    fn anyhow() {
+        Python::with_gil(|py| {
+            let err = anyhow::anyhow!("source").context("middle").context("top");
+
+            let err = PyErrChain::new(py, err);
+            assert_eq!(format!("{err}"), "Exception: top");
+
+            let err = err.source().expect("must have source");
+            assert_eq!(format!("{err}"), "Exception: middle");
+
+            let err = err.source().expect("must have source");
+            assert_eq!(format!("{err}"), "Exception: source");
+
+            assert!(err.source().is_none());
         })
     }
 }
