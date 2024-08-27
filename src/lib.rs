@@ -48,10 +48,10 @@ impl PyErrChain {
     /// using [`PyException::new_err`] with `format!("{}", err)`.
     ///
     /// If you want to customize the translation from [`std::error::Error`] into
-    /// [`PyErr`], please use [`Self::new_with_downcaster`] instead.
+    /// [`PyErr`], please use [`Self::new_with_translator`] instead.
     #[must_use]
     pub fn new<T: Error + 'static>(py: Python, err: T) -> Self {
-        Self::new_with_downcaster::<T, ErrorNoPyErr, DowncastToPyErr>(py, err)
+        Self::new_with_translator::<T, ErrorNoPyErr, DowncastToPyErr>(py, err)
     }
 
     /// Create a new [`PyErrChain`] from `err` using a custom translator from
@@ -67,7 +67,7 @@ impl PyErrChain {
     /// fallback, all remaining errors are translated into [`PyErr`]s using
     /// [`PyException::new_err`] with `format!("{}", err)`.
     #[must_use]
-    pub fn new_with_downcaster<E: Error + 'static, T: AnyErrorToPyErr, M: MapErrorToPyErr>(
+    pub fn new_with_translator<E: Error + 'static, T: AnyErrorToPyErr, M: MapErrorToPyErr>(
         py: Python,
         err: E,
     ) -> Self {
