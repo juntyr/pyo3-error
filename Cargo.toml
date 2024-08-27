@@ -7,22 +7,25 @@ repository = "https://github.com/juntyr/pyo3-error"
 license = "MPL-2.0"
 rust-version = "1.60"
 
-# description = ""
+description = "Unified error causality chains across Rust and Python"
 readme = "README.md"
-# categories = []
-# keywords = []
+categories = ["api-bindings", "rust-patterns"]
+keywords = ["error", "source", "cause", "chain", "python"]
 
 [dependencies]
 pyo3 = { version = "0.21", default-features = false }
 
-[workspace.lints.rust]
+[dev-dependencies]
+pyo3 = { version = "0.21", default-features = false, features = ["auto-initialize"] }
+
+[lints.rust]
 unsafe_code = "forbid"
 unstable_features = "forbid"
 unused_crate_dependencies = "warn"
 
 missing_docs = "warn"
 
-[workspace.lints.clippy]
+[lints.clippy]
 complexity = { priority = -1, level = "warn" }
 correctness = { priority = -1, level = "warn" }
 nursery = { priority = -1, level = "warn" }

@@ -17,7 +17,7 @@
 
 # pyo3-error
 
-Error handling utilities to preserve error cause chains across Python and Rust.
+Unified error causality chains across Rust and Python.
 
 ## License
 
