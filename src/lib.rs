@@ -346,6 +346,21 @@ pub trait MapErrorToPyErr {
         map: impl FnOnce(Box<T>) -> PyErr,
     ) -> Result<PyErr, Box<dyn Error + 'static>>;
 
+    /// Try to map from a boxed `err` via the specific error type `T` or wrapped
+    /// errors such as `MyError<E>` to a [`PyErr`], or return the `err`.
+    ///
+    /// The `map` function should be used to access the provided mapping from
+    /// `T` to [`PyErr`].
+    ///
+    /// # Errors
+    ///
+    /// Returns the original `err` if mapping to a [`PyErr`] failed.
+    fn try_map_send_sync<T: Error + 'static>(
+        py: Python,
+        err: Box<dyn Error + Send + Sync + 'static>,
+        map: impl FnOnce(Box<T>) -> PyErr,
+    ) -> Result<PyErr, Box<dyn Error + Send + Sync + 'static>>;
+
     /// Try to map from an `err` reference via the specific error type `T` or
     /// wrapped errors such as `MyError<E>` to a [`PyErr`], or return [`None`].
     ///
@@ -389,12 +404,24 @@ impl AnyErrorToPyErr for IoErrorToPyErr {
         err: Box<dyn Error + 'static>,
     ) -> Result<PyErr, Box<dyn Error + 'static>> {
         T::try_map(py, err, |err: Box<io::Error>| {
-            // TODO: replace with io::Error::downcast once MSRV >= 1.79
-            #[allow(clippy::redundant_closure_for_method_calls)]
-            if err.get_ref().map_or(false, |err| err.is::<PyErrChain>()) {
-                #[allow(clippy::unwrap_used)] // we have just checked that all unwraps succeed
-                let err: Box<PyErrChain> = err.into_inner().unwrap().downcast().unwrap();
-                return PyErr::from(*err);
+            let kind = err.kind();
+
+            if err.get_ref().is_some() {
+                #[allow(clippy::unwrap_used)] // we just checked that it will be `Some(_)`
+                let err = err.into_inner().unwrap();
+
+                let err = match T::try_map_send_sync(py, err, |err: Box<PyErr>| *err) {
+                    Ok(err) => return err,
+                    Err(err) => err,
+                };
+
+                let err =
+                    match T::try_map_send_sync(py, err, |err: Box<PyErrChain>| err.into_pyerr()) {
+                        Ok(err) => return err,
+                        Err(err) => err,
+                    };
+
+                return PyErr::from(io::Error::new(kind, err));
             }
 
             PyErr::from(*err)
@@ -407,12 +434,14 @@ impl AnyErrorToPyErr for IoErrorToPyErr {
     ) -> Option<PyErr> {
         T::try_map_ref(py, err, |err: &io::Error| {
             if let Some(err) = err.get_ref() {
-                if let Some(err) = err.downcast_ref::<PyErr>() {
-                    return err.clone_ref(py);
+                if let Some(err) = T::try_map_ref(py, err, |err: &PyErr| err.clone_ref(py)) {
+                    return err;
                 }
 
-                if let Some(err) = err.downcast_ref::<PyErrChain>() {
-                    return err.as_pyerr().clone_ref(py);
+                if let Some(err) =
+                    T::try_map_ref(py, err, |err: &PyErrChain| err.as_pyerr().clone_ref(py))
+                {
+                    return err;
                 }
             }
 
@@ -431,6 +460,14 @@ impl MapErrorToPyErr for DowncastToPyErr {
         err: Box<dyn Error + 'static>,
         map: impl FnOnce(Box<T>) -> PyErr,
     ) -> Result<PyErr, Box<dyn Error + 'static>> {
+        err.downcast().map(map)
+    }
+
+    fn try_map_send_sync<T: Error + 'static>(
+        _py: Python,
+        err: Box<dyn Error + Send + Sync + 'static>,
+        map: impl FnOnce(Box<T>) -> PyErr,
+    ) -> Result<PyErr, Box<dyn Error + Send + Sync + 'static>> {
         err.downcast().map(map)
     }
 
