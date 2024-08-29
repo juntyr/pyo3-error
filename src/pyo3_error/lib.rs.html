@@ -716,7 +716,7 @@
 
 </span><span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">borrow::Cow</a>, <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">error::Error</a>, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/std/io/index.html">io</a>};
 
-<span class="kw">use </span>pyo3::{<a href="https://docs.rs/pyo3/0.21/pyo3/exceptions/struct.PyException.html">exceptions::PyException</a>, <a href="https://docs.rs/pyo3/0.21/pyo3/macro.intern.html">intern</a>, <a href="https://docs.rs/pyo3/0.21/pyo3/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://docs.rs/pyo3/0.21/pyo3/sync/struct.GILOnceCell.html">sync::GILOnceCell</a>, <a href="https://docs.rs/pyo3/0.21/pyo3/types/dict/trait.IntoPyDict.html">types::IntoPyDict</a>};
+<span class="kw">use </span>pyo3::{<a href="https://docs.rs/pyo3/0.22/pyo3/exceptions/struct.PyException.html">exceptions::PyException</a>, <a href="https://docs.rs/pyo3/0.22/pyo3/macro.intern.html">intern</a>, <a href="https://docs.rs/pyo3/0.22/pyo3/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://docs.rs/pyo3/0.22/pyo3/sync/struct.GILOnceCell.html">sync::GILOnceCell</a>, <a href="https://docs.rs/pyo3/0.22/pyo3/types/dict/trait.IntoPyDict.html">types::IntoPyDict</a>};
 
 <span class="doccomment">/// [`PyErrChain`] wraps a [`PyErr`] together with its causality chain.
 ///
@@ -729,7 +729,7 @@
 /// [`PyErr::set_cause`] on a clone of the wrapped error after construction will
 /// thus not update the chain as captured by this [`PyErrChain`].
 </span><span class="kw">pub struct </span><a href="../../pyo3_error/struct.PyErrChain.html">PyErrChain</a> {
-    err: <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>,
+    err: <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>,
     cause: <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="self">Self</span>&gt;&gt;,
 }
 
@@ -751,7 +751,7 @@
     /// [`Self::from_pyerr`].
     </span><span class="attr">#[must_use]
     #[inline]
-    </span><span class="kw">pub fn </span>new&lt;T: Into&lt;Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;&gt;(py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>, err: T) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new&lt;T: Into&lt;Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;&gt;(py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>, err: T) -&gt; <span class="self">Self </span>{
         <a href="#183-201"><span class="self">Self</span>::from_pyerr</a>(<a href="#57">py</a>, <a href="#104-106"><span class="self">Self</span>::pyerr_from_err</a>(<a href="#57">py</a>, <a href="#57">err</a>))
     }
 
@@ -777,7 +777,7 @@
         T: <a href="#298-326">AnyErrorToPyErr</a>,
         M: <a href="#333-374">MapErrorToPyErr</a>,
     &gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: E,
     ) -&gt; <span class="self">Self </span>{
         <a href="#183-201"><span class="self">Self</span>::from_pyerr</a>(<a href="#83">py</a>, <span class="self">Self</span>::pyerr_from_err_with_translator::&lt;E, T, M&gt;(<a href="#83">py</a>, <a href="#84">err</a>))
@@ -798,7 +798,7 @@
     /// [`PyErr`], please use [`Self::pyerr_from_err_with_translator`] instead.
     </span><span class="attr">#[must_use]
     #[inline]
-    </span><span class="kw">pub fn </span>pyerr_from_err&lt;T: Into&lt;Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;&gt;(py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>, err: T) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a> {
+    </span><span class="kw">pub fn </span>pyerr_from_err&lt;T: Into&lt;Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;&gt;(py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>, err: T) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a> {
         <span class="self">Self</span>::pyerr_from_err_with_translator::&lt;T, <a href="#378">ErrorNoPyErr</a>, <a href="#455">DowncastToPyErr</a>&gt;(<a href="#104">py</a>, <a href="#104">err</a>)
     }
 
@@ -820,16 +820,16 @@
         T: <a href="#298-326">AnyErrorToPyErr</a>,
         M: <a href="#333-374">MapErrorToPyErr</a>,
     &gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: E,
-    ) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a> {
+    ) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a> {
         <span class="kw">let </span>err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt; = <a href="#127">err</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>();
 
         <span class="kw">let </span>err = <span class="kw">match </span><a href="#343-347">M::try_map</a>(<a href="#126">py</a>, <a href="#129">err</a>, |err: Box&lt;<span class="self">Self</span>&gt;| <a href="#131">err</a>.<a href="#205-207">into_pyerr</a>()) {
             <span class="prelude-val">Ok</span>(err) =&gt; <span class="kw">return </span><a href="#132">err</a>,
             <span class="prelude-val">Err</span>(err) =&gt; <a href="#133">err</a>,
         };
-        <span class="kw">let </span>err = <span class="kw">match </span><a href="#343-347">M::try_map</a>(<a href="#126">py</a>, <a href="#131">err</a>, |err: Box&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt;| <span class="kw-2">*</span><a href="#135">err</a>) {
+        <span class="kw">let </span>err = <span class="kw">match </span><a href="#343-347">M::try_map</a>(<a href="#126">py</a>, <a href="#131">err</a>, |err: Box&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt;| <span class="kw-2">*</span><a href="#135">err</a>) {
             <span class="prelude-val">Ok</span>(err) =&gt; <span class="kw">return </span><a href="#136">err</a>,
             <span class="prelude-val">Err</span>(err) =&gt; <a href="#137">err</a>,
         };
@@ -867,9 +867,9 @@
 
         <span class="kw">let </span>err = <span class="kw">match </span>T::try_from_err::&lt;M&gt;(<a href="#126">py</a>, <a href="#135">err</a>) {
             <span class="prelude-val">Ok</span>(err) =&gt; <a href="#172">err</a>,
-            <span class="prelude-val">Err</span>(err) =&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/exceptions/struct.PyException.html#method.new_err">PyException::new_err</a>(<a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"{err}"</span>)),
+            <span class="prelude-val">Err</span>(err) =&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/exceptions/struct.PyException.html#method.new_err">PyException::new_err</a>(<a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"{err}"</span>)),
         };
-        <a href="#171">err</a>.<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.set_cause">set_cause</a>(<a href="#126">py</a>, <a href="#143">cause</a>);
+        <a href="#171">err</a>.<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.set_cause">set_cause</a>(<a href="#126">py</a>, <a href="#143">cause</a>);
 
         <a href="#171">err</a>
     }
@@ -877,10 +877,10 @@
     <span class="doccomment">/// Wrap a [`PyErr`] and capture its causality chain, as expressed by
     /// [`PyErr::cause`].
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>from_pyerr(py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>, err: <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>from_pyerr(py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>, err: <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>chain = <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.new">Vec::new</a>();
 
-        <span class="kw">let </span><span class="kw-2">mut </span>cause = <a href="#183">err</a>.<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.cause">cause</a>(<a href="#183">py</a>);
+        <span class="kw">let </span><span class="kw-2">mut </span>cause = <a href="#183">err</a>.<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.cause">cause</a>(<a href="#183">py</a>);
 
         <span class="kw">while let </span><span class="prelude-val">Some</span>(err) = cause.take() {
             cause = err.cause(py);
@@ -899,7 +899,7 @@
 
     <span class="doccomment">/// Extract the wrapped [`PyErr`].
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>into_pyerr(<span class="self">self</span>) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a> {
+    </span><span class="kw">pub fn </span>into_pyerr(<span class="self">self</span>) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a> {
         <a class="self" href="#205">self</a>.err
     }
 
@@ -909,7 +909,7 @@
     /// [`PyErr`], the change in causality chain will not be reflected in
     /// this [`PyErrChain`].
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub const fn </span>as_pyerr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a> {
+    </span><span class="kw">pub const fn </span>as_pyerr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a> {
         <span class="kw-2">&amp;</span><a class="self" href="#215">self</a>.err
     }
 
@@ -919,7 +919,7 @@
     /// [`PyErr`], the change in causality chain will not be reflected in
     /// this [`PyErrChain`].
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>cause(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
+    </span><span class="kw">pub fn </span>cause(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
         <a class="self" href="#225">self</a>.cause.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.as_deref">as_deref</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<span class="self">Self</span>::as_pyerr)
     }
 
@@ -931,9 +931,9 @@
     /// Note that all elements of the cloned [`PyErrChain`] will be shared using
     /// reference counting in Python with the existing [`PyErrChain`] `self`.
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>clone_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>clone_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            err: <a class="self" href="#237">self</a>.err.<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.clone_ref">clone_ref</a>(<a href="#237">py</a>),
+            err: <a class="self" href="#237">self</a>.err.<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.clone_ref">clone_ref</a>(<a href="#237">py</a>),
             cause: <span class="self"><a href="#237">self</a>
                 </span>.cause
                 .<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.as_ref">as_ref</a>()
@@ -944,17 +944,17 @@
 
 <span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span><a href="#34-37">PyErrChain</a> {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-        <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html#method.with_gil">Python::with_gil</a>(|py| {
-            <span class="kw">let </span>traceback = <a class="self" href="#249">self</a>.err.<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.traceback_bound">traceback_bound</a>(<a href="#250">py</a>).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|tb| {
-                <a href="#251">tb</a>.<a href="https://docs.rs/pyo3/0.21/pyo3/types/traceback/trait.PyTracebackMethods.html#tymethod.format">format</a>()
+        <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html#method.with_gil">Python::with_gil</a>(|py| {
+            <span class="kw">let </span>traceback = <a class="self" href="#249">self</a>.err.<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.traceback_bound">traceback_bound</a>(<a href="#250">py</a>).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|tb| {
+                <a href="#251">tb</a>.<a href="https://docs.rs/pyo3/0.22/pyo3/types/traceback/trait.PyTracebackMethods.html#tymethod.format">format</a>()
                     .<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_or">map_or</a>(<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html#variant.Borrowed">Cow::Borrowed</a>(<span class="string">"&lt;traceback str() failed&gt;"</span>), |tb| {
                         <a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html#variant.Owned">Cow::Owned</a>(<a href="#253">tb</a>)
                     })
             });
 
             <a href="#249">fmt</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.debug_struct">debug_struct</a>(<span class="string">"PyErrChain"</span>)
-                .<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"type"</span>, <span class="kw-2">&amp;</span><a class="self" href="#249">self</a>.err.<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.get_type_bound">get_type_bound</a>(<a href="#250">py</a>))
-                .<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"value"</span>, <a class="self" href="#249">self</a>.err.<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.value_bound">value_bound</a>(<a href="#250">py</a>))
+                .<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"type"</span>, <span class="kw-2">&amp;</span><a class="self" href="#249">self</a>.err.<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.get_type_bound">get_type_bound</a>(<a href="#250">py</a>))
+                .<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"value"</span>, <a class="self" href="#249">self</a>.err.<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.value_bound">value_bound</a>(<a href="#250">py</a>))
                 .<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"traceback"</span>, <span class="kw-2">&amp;</span><a href="#251">traceback</a>)
                 .<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"cause"</span>, <span class="kw-2">&amp;</span><a class="self" href="#249">self</a>.cause)
                 .<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.finish">finish</a>()
@@ -975,13 +975,13 @@
     }
 }
 
-<span class="kw">impl </span>From&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt; <span class="kw">for </span><a href="#34-37">PyErrChain</a> {
-    <span class="kw">fn </span>from(err: <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html#method.with_gil">Python::with_gil</a>(|py| <a href="#183-201"><span class="self">Self</span>::from_pyerr</a>(<a href="#283">py</a>, <a href="#282">err</a>))
+<span class="kw">impl </span>From&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt; <span class="kw">for </span><a href="#34-37">PyErrChain</a> {
+    <span class="kw">fn </span>from(err: <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>) -&gt; <span class="self">Self </span>{
+        <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html#method.with_gil">Python::with_gil</a>(|py| <a href="#183-201"><span class="self">Self</span>::from_pyerr</a>(<a href="#283">py</a>, <a href="#282">err</a>))
     }
 }
 
-<span class="kw">impl </span>From&lt;<a href="#34-37">PyErrChain</a>&gt; <span class="kw">for </span><a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a> {
+<span class="kw">impl </span>From&lt;<a href="#34-37">PyErrChain</a>&gt; <span class="kw">for </span><a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a> {
     <span class="kw">fn </span>from(err: <a href="#34-37">PyErrChain</a>) -&gt; <span class="self">Self </span>{
         <a href="#288">err</a>.<a href="#205-207">into_pyerr</a>()
     }
@@ -1004,9 +1004,9 @@
     ///
     /// Returns the original `err` if translating to a [`PyErr`] failed.
     </span><span class="kw">fn </span>try_from_err&lt;T: <a href="#333-374">MapErrorToPyErr</a>&gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;;
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;;
 
     <span class="doccomment">/// Try to translate from an `err` reference to a [`PyErr`], or return
     /// [`None`].
@@ -1017,9 +1017,9 @@
     /// `MyError&lt;E&gt;`.
     ///
     </span><span class="kw">fn </span>try_from_err_ref&lt;T: <a href="#333-374">MapErrorToPyErr</a>&gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>),
-    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt;;
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt;;
 }
 
 <span class="doccomment">/// Utility trait to try to translate via specific error types `E` implementing
@@ -1038,10 +1038,10 @@
     ///
     /// Returns the original `err` if mapping to a [`PyErr`] failed.
     </span><span class="kw">fn </span>try_map&lt;T: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;,
-        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;;
+        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;;
 
     <span class="doccomment">/// Try to map from a boxed `err` via the specific error type `T` or wrapped
     /// errors such as `MyError&lt;E&gt;` to a [`PyErr`], or return the `err`.
@@ -1053,10 +1053,10 @@
     ///
     /// Returns the original `err` if mapping to a [`PyErr`] failed.
     </span><span class="kw">fn </span>try_map_send_sync&lt;T: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html">Sync</a> + <span class="lifetime">'static</span>&gt;,
-        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html">Sync</a> + <span class="lifetime">'static</span>&gt;&gt;;
+        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html">Sync</a> + <span class="lifetime">'static</span>&gt;&gt;;
 
     <span class="doccomment">/// Try to map from an `err` reference via the specific error type `T` or
     /// wrapped errors such as `MyError&lt;E&gt;` to a [`PyErr`], or return [`None`].
@@ -1064,10 +1064,10 @@
     /// The `map` function should be used to access the provided mapping from
     /// `&amp;T` to [`PyErr`].
     </span><span class="kw">fn </span>try_map_ref&lt;T: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>),
-        map: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;</span>T) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>,
-    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt;;
+        map: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;</span>T) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt;;
 }
 
 <span class="doccomment">/// Never attempt to translate any [`std::error::Error`] to [`PyErr`] when used
@@ -1077,17 +1077,17 @@
 <span class="kw">impl </span><a href="#298-326">AnyErrorToPyErr</a> <span class="kw">for </span><a href="#378">ErrorNoPyErr</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>try_from_err&lt;T: <a href="#333-374">MapErrorToPyErr</a>&gt;(
-        _py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        _py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt; {
         <span class="prelude-val">Err</span>(<a href="#384">err</a>)
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>try_from_err_ref&lt;T: <a href="#333-374">MapErrorToPyErr</a>&gt;(
-        _py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        _py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         _err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>),
-    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
         <span class="prelude-val">None
     </span>}
 }
@@ -1097,9 +1097,9 @@
 
 <span class="kw">impl </span><a href="#298-326">AnyErrorToPyErr</a> <span class="kw">for </span><a href="#399">IoErrorToPyErr</a> {
     <span class="kw">fn </span>try_from_err&lt;T: <a href="#333-374">MapErrorToPyErr</a>&gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt; {
         <a href="#343-347">T::try_map</a>(<a href="#403">py</a>, <a href="#404">err</a>, |err: Box&lt;<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html">io::Error</a>&gt;| {
             <span class="kw">let </span>kind = <a href="#406">err</a>.<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html#method.kind">kind</a>();
 
@@ -1107,7 +1107,7 @@
                 <span class="attr">#[allow(clippy::unwrap_used)] </span><span class="comment">// we just checked that it will be `Some(_)`
                 </span><span class="kw">let </span>err = <a href="#406">err</a>.<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html#method.into_inner">into_inner</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>();
 
-                <span class="kw">let </span>err = <span class="kw">match </span><a href="#358-362">T::try_map_send_sync</a>(<a href="#403">py</a>, <a href="#411">err</a>, |err: Box&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt;| <span class="kw-2">*</span><a href="#413">err</a>) {
+                <span class="kw">let </span>err = <span class="kw">match </span><a href="#358-362">T::try_map_send_sync</a>(<a href="#403">py</a>, <a href="#411">err</a>, |err: Box&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt;| <span class="kw-2">*</span><a href="#413">err</a>) {
                     <span class="prelude-val">Ok</span>(err) =&gt; <span class="kw">return </span><a href="#414">err</a>,
                     <span class="prelude-val">Err</span>(err) =&gt; <a href="#415">err</a>,
                 };
@@ -1126,17 +1126,17 @@
     }
 
     <span class="kw">fn </span>try_from_err_ref&lt;T: <a href="#333-374">MapErrorToPyErr</a>&gt;(
-        py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>),
-    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
         <a href="#369-373">T::try_map_ref</a>(<a href="#432">py</a>, <a href="#433">err</a>, |err: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html">io::Error</a>| {
             <span class="kw">if let </span><span class="prelude-val">Some</span>(err) = <a href="#435">err</a>.<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html#method.get_ref">get_ref</a>() {
-                <span class="kw">if let </span><span class="prelude-val">Some</span>(err) = <a href="#369-373">T::try_map_ref</a>(<a href="#432">py</a>, <a href="#436">err</a>, |err: <span class="kw-2">&amp;</span><a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>| <a href="#437">err</a>.<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.clone_ref">clone_ref</a>(<a href="#432">py</a>)) {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(err) = <a href="#369-373">T::try_map_ref</a>(<a href="#432">py</a>, <a href="#436">err</a>, |err: <span class="kw-2">&amp;</span><a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>| <a href="#437">err</a>.<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.clone_ref">clone_ref</a>(<a href="#432">py</a>)) {
                     <span class="kw">return </span><a href="#437">err</a>;
                 }
 
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(err) =
-                    <a href="#369-373">T::try_map_ref</a>(<a href="#432">py</a>, <a href="#436">err</a>, |err: <span class="kw-2">&amp;</span><a href="#34-37">PyErrChain</a>| <a href="#442">err</a>.<a href="#215-217">as_pyerr</a>().<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html#method.clone_ref">clone_ref</a>(<a href="#432">py</a>))
+                    <a href="#369-373">T::try_map_ref</a>(<a href="#432">py</a>, <a href="#436">err</a>, |err: <span class="kw-2">&amp;</span><a href="#34-37">PyErrChain</a>| <a href="#442">err</a>.<a href="#215-217">as_pyerr</a>().<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html#method.clone_ref">clone_ref</a>(<a href="#432">py</a>))
                 {
                     <span class="kw">return </span><a href="#441">err</a>;
                 }
@@ -1153,26 +1153,26 @@
 
 <span class="kw">impl </span><a href="#333-374">MapErrorToPyErr</a> <span class="kw">for </span><a href="#455">DowncastToPyErr</a> {
     <span class="kw">fn </span>try_map&lt;T: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;(
-        _py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        _py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;,
-        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt; {
+        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt; {
         <a href="#460">err</a>.<a href="https://doc.rust-lang.org/nightly/alloc/foreigntype.boxed.html#method.downcast">downcast</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<a href="#461">map</a>)
     }
 
     <span class="kw">fn </span>try_map_send_sync&lt;T: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;(
-        _py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        _py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html">Sync</a> + <span class="lifetime">'static</span>&gt;,
-        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html">Sync</a> + <span class="lifetime">'static</span>&gt;&gt; {
+        map: <span class="kw">impl </span>FnOnce(Box&lt;T&gt;) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, Box&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html">Sync</a> + <span class="lifetime">'static</span>&gt;&gt; {
         <a href="#468">err</a>.<a href="https://doc.rust-lang.org/nightly/alloc/foreigntype.boxed.html#method.downcast">downcast</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<a href="#469">map</a>)
     }
 
     <span class="kw">fn </span>try_map_ref&lt;T: <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;(
-        _py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>,
+        _py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>,
         err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>),
-        map: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;</span>T) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>,
-    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
+        map: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;</span>T) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
         <a href="#476">err</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.error.html#method.downcast_ref">downcast_ref</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<a href="#477">map</a>)
     }
 }
@@ -1184,29 +1184,29 @@
 /// This function may be used when implementing [`AnyErrorToPyErr`] or
 /// [`MapErrorToPyErr`] to pythonize any available error location information.
 </span><span class="attr">#[must_use]
-</span><span class="kw">pub fn </span><a href="../../pyo3_error/fn.err_with_location.html">err_with_location</a>(py: <a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html">Python</a>, err: <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>, file: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, line: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, column: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a> {
+</span><span class="kw">pub fn </span><a href="../../pyo3_error/fn.err_with_location.html">err_with_location</a>(py: <a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html">Python</a>, err: <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>, file: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, line: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, column: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a> {
     <span class="kw">const </span>RAISE: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">"raise err"</span>;
 
-    <span class="kw">static </span>COMPILE: GILOnceCell&lt;Py&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;&gt; = <a href="https://docs.rs/pyo3/0.21/pyo3/sync/struct.GILOnceCell.html#method.new">GILOnceCell::new</a>();
-    <span class="kw">static </span>EXEC: GILOnceCell&lt;Py&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;&gt; = <a href="https://docs.rs/pyo3/0.21/pyo3/sync/struct.GILOnceCell.html#method.new">GILOnceCell::new</a>();
+    <span class="kw">static </span>COMPILE: GILOnceCell&lt;Py&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;&gt; = <a href="https://docs.rs/pyo3/0.22/pyo3/sync/struct.GILOnceCell.html#method.new">GILOnceCell::new</a>();
+    <span class="kw">static </span>EXEC: GILOnceCell&lt;Py&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;&gt; = <a href="https://docs.rs/pyo3/0.22/pyo3/sync/struct.GILOnceCell.html#method.new">GILOnceCell::new</a>();
 
     <span class="kw">let _ </span>= <a href="#490">column</a>;
 
     <span class="attr">#[allow(clippy::expect_used)] </span><span class="comment">// failure is a Python bug
     </span><span class="kw">let </span>compile = <a href="#493">COMPILE</a>
-        .<a href="https://docs.rs/pyo3/0.21/pyo3/sync/struct.GILOnceCell.html#method.get_or_try_init">get_or_try_init</a>(<a href="#490">py</a>, || -&gt; <span class="prelude-ty">Result</span>&lt;Py&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;, <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
-            <span class="prelude-val">Ok</span>(<a href="#490">py</a>.<a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html#method.import_bound">import_bound</a>(<span class="string">"builtins"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/trait.PyAnyMethods.html#tymethod.getattr">getattr</a>(<span class="string">"compile"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.21/pyo3/instance/struct.Bound.html#method.unbind">unbind</a>())
+        .<a href="https://docs.rs/pyo3/0.22/pyo3/sync/struct.GILOnceCell.html#method.get_or_try_init">get_or_try_init</a>(<a href="#490">py</a>, || -&gt; <span class="prelude-ty">Result</span>&lt;Py&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;, <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
+            <span class="prelude-val">Ok</span>(<a href="#490">py</a>.<a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html#method.import_bound">import_bound</a>(<span class="string">"builtins"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/trait.PyAnyMethods.html#tymethod.getattr">getattr</a>(<span class="string">"compile"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.22/pyo3/instance/struct.Bound.html#method.unbind">unbind</a>())
         })
         .<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect">expect</a>(<span class="string">"Python does not provide a compile() function"</span>)
-        .<a href="https://docs.rs/pyo3/0.21/pyo3/instance/struct.Py.html#method.bind">bind</a>(<a href="#490">py</a>);
+        .<a href="https://docs.rs/pyo3/0.22/pyo3/instance/struct.Py.html#method.bind">bind</a>(<a href="#490">py</a>);
 
     <span class="attr">#[allow(clippy::expect_used)] </span><span class="comment">// failure is a Python bug
     </span><span class="kw">let </span>exec = <a href="#494">EXEC</a>
-        .<a href="https://docs.rs/pyo3/0.21/pyo3/sync/struct.GILOnceCell.html#method.get_or_try_init">get_or_try_init</a>(<a href="#490">py</a>, || -&gt; <span class="prelude-ty">Result</span>&lt;Py&lt;<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;, <a href="https://docs.rs/pyo3/0.21/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
-            <span class="prelude-val">Ok</span>(<a href="#490">py</a>.<a href="https://docs.rs/pyo3/0.21/pyo3/marker/struct.Python.html#method.import_bound">import_bound</a>(<span class="string">"builtins"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/trait.PyAnyMethods.html#tymethod.getattr">getattr</a>(<span class="string">"exec"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.21/pyo3/instance/struct.Bound.html#method.unbind">unbind</a>())
+        .<a href="https://docs.rs/pyo3/0.22/pyo3/sync/struct.GILOnceCell.html#method.get_or_try_init">get_or_try_init</a>(<a href="#490">py</a>, || -&gt; <span class="prelude-ty">Result</span>&lt;Py&lt;<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/struct.PyAny.html">PyAny</a>&gt;, <a href="https://docs.rs/pyo3/0.22/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
+            <span class="prelude-val">Ok</span>(<a href="#490">py</a>.<a href="https://docs.rs/pyo3/0.22/pyo3/marker/struct.Python.html#method.import_bound">import_bound</a>(<span class="string">"builtins"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/trait.PyAnyMethods.html#tymethod.getattr">getattr</a>(<span class="string">"exec"</span>)<span class="question-mark">?</span>.<a href="https://docs.rs/pyo3/0.22/pyo3/instance/struct.Bound.html#method.unbind">unbind</a>())
         })
         .<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect">expect</a>(<span class="string">"Python does not provide an exec() function"</span>)
-        .<a href="https://docs.rs/pyo3/0.21/pyo3/instance/struct.Py.html#method.bind">bind</a>(<a href="#490">py</a>);
+        .<a href="https://docs.rs/pyo3/0.22/pyo3/instance/struct.Py.html#method.bind">bind</a>(<a href="#490">py</a>);
 
     <span class="kw">let </span><span class="kw-2">mut </span>code = <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html#method.with_capacity">String::with_capacity</a>((<a href="#490">line</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) + <a href="#491">RAISE</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.str.html#method.len">len</a>());
     <span class="kw">for _ in </span><span class="number">1</span>..line {
@@ -1216,12 +1216,12 @@
 
     <span class="attr">#[allow(clippy::expect_used)] </span><span class="comment">// failure is a Python bug
     </span><span class="kw">let </span>code = <a href="#499">compile</a>
-        .<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/trait.PyAnyMethods.html#tymethod.call1">call1</a>((<a href="#514">code</a>, <a href="#490">file</a>, <a class="macro" href="https://docs.rs/pyo3/0.21/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"exec"</span>)))
+        .<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/trait.PyAnyMethods.html#tymethod.call1">call1</a>((<a href="#514">code</a>, <a href="#490">file</a>, <a class="macro" href="https://docs.rs/pyo3/0.22/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"exec"</span>)))
         .<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect">expect</a>(<span class="string">"failed to compile PyErr location helper"</span>);
-    <span class="kw">let </span>globals = [(<a class="macro" href="https://docs.rs/pyo3/0.21/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"err"</span>), <a href="#490">err</a>)].<a href="https://docs.rs/pyo3/0.21/pyo3/types/dict/trait.IntoPyDict.html#tymethod.into_py_dict_bound">into_py_dict_bound</a>(<a href="#490">py</a>);
+    <span class="kw">let </span>globals = [(<a class="macro" href="https://docs.rs/pyo3/0.22/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"err"</span>), <a href="#490">err</a>)].<a href="https://docs.rs/pyo3/0.22/pyo3/types/dict/trait.IntoPyDict.html#tymethod.into_py_dict_bound">into_py_dict_bound</a>(<a href="#490">py</a>);
 
     <span class="attr">#[allow(clippy::expect_used)] </span><span class="comment">// failure is a Python bug
-    </span><span class="kw">let </span>err = <a href="#507">exec</a>.<a href="https://docs.rs/pyo3/0.21/pyo3/types/any/trait.PyAnyMethods.html#tymethod.call1">call1</a>((<a href="#521">code</a>, <a href="#524">globals</a>)).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect_err">expect_err</a>(<span class="string">"raise must raise"</span>);
+    </span><span class="kw">let </span>err = <a href="#507">exec</a>.<a href="https://docs.rs/pyo3/0.22/pyo3/types/any/trait.PyAnyMethods.html#tymethod.call1">call1</a>((<a href="#521">code</a>, <a href="#524">globals</a>)).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect_err">expect_err</a>(<span class="string">"raise must raise"</span>);
     <a href="#527">err</a>
 }
 
