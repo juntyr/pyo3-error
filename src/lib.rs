@@ -3,7 +3,7 @@
 //! [CI Status]: https://img.shields.io/github/actions/workflow/status/juntyr/pyo3-error/ci.yml?branch=main
 //! [workflow]: https://github.com/juntyr/pyo3-error/actions/workflows/ci.yml?query=branch%3Amain
 //!
-//! [MSRV]: https://img.shields.io/badge/MSRV-1.60.0-blue
+//! [MSRV]: https://img.shields.io/badge/MSRV-1.63.0-blue
 //! [repo]: https://github.com/juntyr/pyo3-error
 //!
 //! [Latest Version]: https://img.shields.io/crates/v/pyo3-error
