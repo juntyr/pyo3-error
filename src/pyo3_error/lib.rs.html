@@ -691,7 +691,10 @@
 <a href="#690" id="690">690</a>
 <a href="#691" id="691">691</a>
 <a href="#692" id="692">692</a>
-<a href="#693" id="693">693</a></pre></div><pre class="rust"><code><span class="doccomment">//! [![CI Status]][workflow] [![MSRV]][repo] [![Latest Version]][crates.io] [![Rust Doc Crate]][docs.rs] [![Rust Doc Main]][docs]
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a></pre></div><pre class="rust"><code><span class="doccomment">//! [![CI Status]][workflow] [![MSRV]][repo] [![Latest Version]][crates.io] [![Rust Doc Crate]][docs.rs] [![Rust Doc Main]][docs]
 //!
 //! [CI Status]: https://img.shields.io/github/actions/workflow/status/juntyr/pyo3-error/ci.yml?branch=main
 //! [workflow]: https://github.com/juntyr/pyo3-error/actions/workflows/ci.yml?query=branch%3Amain
@@ -1226,7 +1229,8 @@
         Python::with_gil(|py| {
             <span class="kw">let </span>err = py
                 .run(
-                    <span class="string">r#"
+                    <span class="kw-2">&amp;</span>std::ffi::CString::new(
+                        <span class="string">r#"
 try:
     try:
         raise Exception("source")
@@ -1235,6 +1239,8 @@ try:
 except Exception as err:
     raise LookupError("top") from err
 "#</span>,
+                    )
+                    .unwrap(),
                     <span class="prelude-val">None</span>,
                     <span class="prelude-val">None</span>,
                 )
