@@ -533,7 +533,8 @@ mod tests {
         Python::with_gil(|py| {
             let err = py
                 .run(
-                    r#"
+                    &std::ffi::CString::new(
+                        r#"
 try:
     try:
         raise Exception("source")
@@ -542,6 +543,8 @@ try:
 except Exception as err:
     raise LookupError("top") from err
 "#,
+                    )
+                    .unwrap(),
                     None,
                     None,
                 )
