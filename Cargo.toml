@@ -1,6 +1,6 @@
 [package]
 name = "pyo3-error"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 authors = ["Juniper Tyree <juniper.tyree@helsinki.fi>"]
 repository = "https://github.com/juntyr/pyo3-error"
@@ -13,11 +13,11 @@ categories = ["api-bindings", "rust-patterns"]
 keywords = ["error", "source", "cause", "chain", "python"]
 
 [dependencies]
-pyo3 = { version = "0.22", default-features = false }
+pyo3 = { version = "0.23", default-features = false }
 
 [dev-dependencies]
 anyhow = { version = "1.0", default-features = false, features = ["std"] }
-pyo3 = { version = "0.22", default-features = false, features = ["auto-initialize"] }
+pyo3 = { version = "0.23", default-features = false, features = ["auto-initialize"] }
 
 [lints.rust]
 unsafe_code = "forbid"

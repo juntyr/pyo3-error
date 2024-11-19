@@ -248,7 +248,7 @@ impl PyErrChain {
 impl fmt::Debug for PyErrChain {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         Python::with_gil(|py| {
-            let traceback = self.err.traceback_bound(py).map(|tb| {
+            let traceback = self.err.traceback(py).map(|tb| {
                 tb.format()
                     .map_or(Cow::Borrowed("<traceback str() failed>"), |tb| {
                         Cow::Owned(tb)
@@ -256,8 +256,8 @@ impl fmt::Debug for PyErrChain {
             });
 
             fmt.debug_struct("PyErrChain")
-                .field("type", &self.err.get_type_bound(py))
-                .field("value", self.err.value_bound(py))
+                .field("type", &self.err.get_type(py))
+                .field("value", self.err.value(py))
                 .field("traceback", &traceback)
                 .field("cause", &self.cause)
                 .finish()
@@ -497,19 +497,12 @@ pub fn err_with_location(py: Python, err: PyErr, file: &str, line: u32, column: 
 
     #[allow(clippy::expect_used)] // failure is a Python bug
     let compile = COMPILE
-        .get_or_try_init(py, || -> Result<Py<PyAny>, PyErr> {
-            Ok(py.import_bound("builtins")?.getattr("compile")?.unbind())
-        })
-        .expect("Python does not provide a compile() function")
-        .bind(py);
-
+        .import(py, "builtins", "compile")
+        .expect("Python does not provide a compile() function");
     #[allow(clippy::expect_used)] // failure is a Python bug
     let exec = EXEC
-        .get_or_try_init(py, || -> Result<Py<PyAny>, PyErr> {
-            Ok(py.import_bound("builtins")?.getattr("exec")?.unbind())
-        })
-        .expect("Python does not provide an exec() function")
-        .bind(py);
+        .import(py, "builtins", "exec")
+        .expect("Python does not provide an exec() function");
 
     let mut code = String::with_capacity((line as usize) + RAISE.len());
     for _ in 1..line {
@@ -521,7 +514,10 @@ pub fn err_with_location(py: Python, err: PyErr, file: &str, line: u32, column: 
     let code = compile
         .call1((code, file, intern!(py, "exec")))
         .expect("failed to compile PyErr location helper");
-    let globals = [(intern!(py, "err"), err)].into_py_dict_bound(py);
+    #[allow(clippy::expect_used)] // failure is a Python bug
+    let globals = [(intern!(py, "err"), err)]
+        .into_py_dict(py)
+        .expect("failed to create a dict(err=...)");
 
     #[allow(clippy::expect_used)] // failure is a Python bug
     let err = exec.call1((code, globals)).expect_err("raise must raise");
@@ -536,7 +532,7 @@ mod tests {
     fn python_cause() {
         Python::with_gil(|py| {
             let err = py
-                .run_bound(
+                .run(
                     r#"
 try:
     try:
@@ -627,7 +623,7 @@ except Exception as err:
             // check the message, location traceback, and cause for the root error
             assert_eq!(format!("{err}"), "Exception: oh no");
             assert_eq!(
-                err.traceback_bound(py)
+                err.traceback(py)
                     .expect("must have traceback")
                     .format()
                     .expect("traceback must be formattable"),
@@ -648,7 +644,7 @@ except Exception as err:
             // check the message and location traceback for the top-level error
             assert_eq!(format!("{err}"), "Exception: oh yes");
             assert_eq!(
-                err.traceback_bound(py)
+                err.traceback(py)
                     .expect("must have traceback")
                     .format()
                     .expect("traceback must be formattable"),
@@ -664,7 +660,7 @@ except Exception as err:
             assert_eq!(format!("{cause}"), "Exception: oh no");
             assert_eq!(
                 cause
-                    .traceback_bound(py)
+                    .traceback(py)
                     .expect("must have traceback")
                     .format()
                     .expect("traceback must be formattable"),
