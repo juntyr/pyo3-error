@@ -36,7 +36,12 @@ jobs:
 
       - name: Install power tools
         uses: taiki-e/install-action@cargo-hack
-      
+
+      # Downgrade some dependencies for MSRV 1.63
+      - name: Downgrade dependencies for MSRV
+        if: ${{ matrix.rust != 'stable' }}
+        run: cargo update -p once_cell --precise 1.20.3
+
       - name: Check the powerset
         run: |
           cargo hack check --all \
@@ -69,7 +74,12 @@ jobs:
 
       - name: Install power tools
         uses: taiki-e/install-action@cargo-hack
-      
+
+      # Downgrade some dependencies for MSRV 1.63
+      - name: Downgrade dependencies for MSRV
+        if: ${{ matrix.rust != 'stable' }}
+        run: cargo update -p once_cell --precise 1.20.3
+
       - name: Run the test-suite powerset
         run: |
           cargo hack test --workspace \
@@ -116,6 +126,11 @@ jobs:
 
       - name: Install power tools
         uses: taiki-e/install-action@cargo-hack
+
+      # Downgrade some dependencies for MSRV 1.63
+      - name: Downgrade dependencies for MSRV
+        if: ${{ matrix.rust != 'stable' }}
+        run: cargo update -p once_cell --precise 1.20.3
 
       - name: Check the code style powerset
         if: ${{ matrix.rust == 'stable' }}
