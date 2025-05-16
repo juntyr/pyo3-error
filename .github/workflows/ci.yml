@@ -54,7 +54,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         rust: ["1.63", stable, nightly]
-        python: ["3.10", "3.11", "3.12"]
+        python: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - name: Checkout the Repository
