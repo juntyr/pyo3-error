@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        rust: ["1.63", stable, nightly]
+        rust: ["1.74", stable, nightly]
 
     steps:
       - name: Checkout the Repository
@@ -37,11 +37,6 @@ jobs:
       - name: Install power tools
         uses: taiki-e/install-action@cargo-hack
 
-      # Downgrade some dependencies for MSRV 1.63
-      - name: Downgrade dependencies for MSRV
-        if: ${{ matrix.rust != 'stable' }}
-        run: cargo update -p once_cell --precise 1.20.3
-
       - name: Check the powerset
         run: |
           cargo hack check --all \
@@ -53,7 +48,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        rust: ["1.63", stable, nightly]
+        rust: ["1.74", stable, nightly]
         python: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
@@ -74,11 +69,6 @@ jobs:
 
       - name: Install power tools
         uses: taiki-e/install-action@cargo-hack
-
-      # Downgrade some dependencies for MSRV 1.63
-      - name: Downgrade dependencies for MSRV
-        if: ${{ matrix.rust != 'stable' }}
-        run: cargo update -p once_cell --precise 1.20.3
 
       - name: Run the test-suite powerset
         run: |
@@ -110,7 +100,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        rust: ["1.63", stable]
+        rust: ["1.74", stable]
 
     steps:
       - name: Checkout the Repository
@@ -126,11 +116,6 @@ jobs:
 
       - name: Install power tools
         uses: taiki-e/install-action@cargo-hack
-
-      # Downgrade some dependencies for MSRV 1.63
-      - name: Downgrade dependencies for MSRV
-        if: ${{ matrix.rust != 'stable' }}
-        run: cargo update -p once_cell --precise 1.20.3
 
       - name: Check the code style powerset
         if: ${{ matrix.rust == 'stable' }}

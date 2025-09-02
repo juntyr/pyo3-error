@@ -3,7 +3,7 @@
 //! [CI Status]: https://img.shields.io/github/actions/workflow/status/juntyr/pyo3-error/ci.yml?branch=main
 //! [workflow]: https://github.com/juntyr/pyo3-error/actions/workflows/ci.yml?query=branch%3Amain
 //!
-//! [MSRV]: https://img.shields.io/badge/MSRV-1.63.0-blue
+//! [MSRV]: https://img.shields.io/badge/MSRV-1.74.0-blue
 //! [repo]: https://github.com/juntyr/pyo3-error
 //!
 //! [Latest Version]: https://img.shields.io/crates/v/pyo3-error
@@ -19,7 +19,7 @@
 
 use std::{borrow::Cow, error::Error, fmt, io};
 
-use pyo3::{exceptions::PyException, intern, prelude::*, sync::GILOnceCell, types::IntoPyDict};
+use pyo3::{exceptions::PyException, intern, prelude::*, sync::PyOnceLock, types::IntoPyDict};
 
 /// [`PyErrChain`] wraps a [`PyErr`] together with its causality chain.
 ///
@@ -247,7 +247,7 @@ impl PyErrChain {
 
 impl fmt::Debug for PyErrChain {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        Python::with_gil(|py| {
+        Python::attach(|py| {
             let traceback = self.err.traceback(py).map(|tb| {
                 tb.format()
                     .map_or(Cow::Borrowed("<traceback str() failed>"), |tb| {
@@ -280,7 +280,7 @@ impl Error for PyErrChain {
 
 impl From<PyErr> for PyErrChain {
     fn from(err: PyErr) -> Self {
-        Python::with_gil(|py| Self::from_pyerr(py, err))
+        Python::attach(|py| Self::from_pyerr(py, err))
     }
 }
 
@@ -490,8 +490,8 @@ impl MapErrorToPyErr for DowncastToPyErr {
 pub fn err_with_location(py: Python, err: PyErr, file: &str, line: u32, column: u32) -> PyErr {
     const RAISE: &str = "raise err";
 
-    static COMPILE: GILOnceCell<Py<PyAny>> = GILOnceCell::new();
-    static EXEC: GILOnceCell<Py<PyAny>> = GILOnceCell::new();
+    static COMPILE: PyOnceLock<Py<PyAny>> = PyOnceLock::new();
+    static EXEC: PyOnceLock<Py<PyAny>> = PyOnceLock::new();
 
     let _ = column;
 
@@ -530,7 +530,7 @@ mod tests {
 
     #[test]
     fn python_cause() {
-        Python::with_gil(|py| {
+        Python::attach(|py| {
             let err = py
                 .run(
                     &std::ffi::CString::new(
@@ -586,7 +586,7 @@ except Exception as err:
             }
         }
 
-        Python::with_gil(|py| {
+        Python::attach(|py| {
             let err = PyErrChain::new(
                 py,
                 MyErr {
@@ -620,7 +620,7 @@ except Exception as err:
 
     #[test]
     fn err_location() {
-        Python::with_gil(|py| {
+        Python::attach(|py| {
             let err = err_with_location(py, PyException::new_err("oh no"), "foo.rs", 27, 15);
 
             // check the message, location traceback, and cause for the root error
@@ -678,7 +678,7 @@ except Exception as err:
 
     #[test]
     fn anyhow() {
-        Python::with_gil(|py| {
+        Python::attach(|py| {
             let err = anyhow::anyhow!("source").context("middle").context("top");
 
             let err = PyErrChain::new(py, err);
