@@ -1,3 +1,2 @@
-var srcIndex = new Map(JSON.parse('[["pyo3_error",["",[],["lib.rs"]]]]'));
-createSrcSidebar();
-//{"start":36,"fragment_lengths":[33]}
+createSrcSidebar('[["pyo3_error",["",[],["lib.rs"]]]]');
+//{"start":19,"fragment_lengths":[33]}
