@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-ca0dd0c4.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="pyo3_error" data-themes="" data-resource-suffix="" data-rustdoc-version="1.92.0-nightly (f04e3dfc8 2025-10-19)" data-channel="nightly" data-search-js="search-8d3311b9.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ce535bd0.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">pyo3_error/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! [![CI Status]][workflow] [![MSRV]][repo] [![Latest Version]][crates.io] [![Rust Doc Crate]][docs.rs] [![Rust Doc Main]][docs]
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="pyo3_error" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0-nightly (57d2fb136 2026-02-01)" data-channel="nightly" data-search-js="search-fb33671b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-f9617a14.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12f88f4f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">pyo3_error/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! [![CI Status]][workflow] [![MSRV]][repo] [![Latest Version]][crates.io] [![Rust Doc Crate]][docs.rs] [![Rust Doc Main]][docs]
 <a href=#2 id=2 data-nosnippet>2</a>//!
 <a href=#3 id=3 data-nosnippet>3</a>//! [CI Status]: https://img.shields.io/github/actions/workflow/status/juntyr/pyo3-error/ci.yml?branch=main
 <a href=#4 id=4 data-nosnippet>4</a>//! [workflow]: https://github.com/juntyr/pyo3-error/actions/workflows/ci.yml?query=branch%3Amain
@@ -19,7 +19,7 @@
 <a href=#19 id=19 data-nosnippet>19</a>
 <a href=#20 id=20 data-nosnippet>20</a></span><span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">borrow::Cow</a>, <a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">error::Error</a>, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/std/io/index.html">io</a>};
 <a href=#21 id=21 data-nosnippet>21</a>
-<a href=#22 id=22 data-nosnippet>22</a><span class="kw">use </span>pyo3::{<a href="https://docs.rs/pyo3/0.27/pyo3/exceptions/struct.PyException.html">exceptions::PyException</a>, <a href="https://docs.rs/pyo3/0.27/pyo3/macro.intern.html">intern</a>, <a href="https://docs.rs/pyo3/0.27/pyo3/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://docs.rs/pyo3/0.27/pyo3/sync/once_lock/struct.PyOnceLock.html">sync::PyOnceLock</a>, <a href="https://docs.rs/pyo3/0.27/pyo3/types/dict/trait.IntoPyDict.html">types::IntoPyDict</a>};
+<a href=#22 id=22 data-nosnippet>22</a><span class="kw">use </span>pyo3::{<a href="https://docs.rs/pyo3/0.27/pyo3/exceptions/struct.PyException.html">exceptions::PyException</a>, <a href="https://docs.rs/pyo3/0.27/pyo3/macro.intern.html">intern</a>, prelude::<span class="kw-2">*</span>, <a href="https://docs.rs/pyo3/0.27/pyo3/sync/once_lock/struct.PyOnceLock.html">sync::PyOnceLock</a>, <a href="https://docs.rs/pyo3/0.27/pyo3/types/dict/trait.IntoPyDict.html">types::IntoPyDict</a>};
 <a href=#23 id=23 data-nosnippet>23</a>
 <a href=#24 id=24 data-nosnippet>24</a><span class="doccomment">/// [`PyErrChain`] wraps a [`PyErr`] together with its causality chain.
 <a href=#25 id=25 data-nosnippet>25</a>///
@@ -83,7 +83,7 @@
 <a href=#83 id=83 data-nosnippet>83</a>        py: <a href="https://docs.rs/pyo3/0.27/pyo3/marker/struct.Python.html">Python</a>,
 <a href=#84 id=84 data-nosnippet>84</a>        err: E,
 <a href=#85 id=85 data-nosnippet>85</a>    ) -&gt; <span class="self">Self </span>{
-<a href=#86 id=86 data-nosnippet>86</a>        <span class="self">Self</span>::<a href="#183-201">from_pyerr</a>(<a href="#83">py</a>, <span class="self">Self</span>::<a href="#121-178">pyerr_from_err_with_translator</a>::&lt;E, T, M&gt;(<a href="#83">py</a>, <a href="#84">err</a>))
+<a href=#86 id=86 data-nosnippet>86</a>        <span class="self">Self</span>::<a href="#183-201">from_pyerr</a>(<a href="#83">py</a>, <span class="self">Self</span>::pyerr_from_err_with_translator::&lt;E, T, M&gt;(<a href="#83">py</a>, <a href="#84">err</a>))
 <a href=#87 id=87 data-nosnippet>87</a>    }
 <a href=#88 id=88 data-nosnippet>88</a>
 <a href=#89 id=89 data-nosnippet>89</a>    <span class="doccomment">/// Transform an `err` implementing [`std::error::Error`] into a [`PyErr`]
@@ -102,7 +102,7 @@
 <a href=#102 id=102 data-nosnippet>102</a>    </span><span class="attr">#[must_use]
 <a href=#103 id=103 data-nosnippet>103</a>    #[inline]
 <a href=#104 id=104 data-nosnippet>104</a>    </span><span class="kw">pub fn </span>pyerr_from_err&lt;T: <a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into</a>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html">Box</a>&lt;<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>&gt;&gt;&gt;(py: <a href="https://docs.rs/pyo3/0.27/pyo3/marker/struct.Python.html">Python</a>, err: T) -&gt; <a href="https://docs.rs/pyo3/0.27/pyo3/err/struct.PyErr.html">PyErr</a> {
-<a href=#105 id=105 data-nosnippet>105</a>        <span class="self">Self</span>::<a href="#121-178">pyerr_from_err_with_translator</a>::&lt;T, <a href="#378">ErrorNoPyErr</a>, <a href="#455">DowncastToPyErr</a>&gt;(<a href="#104">py</a>, <a href="#104">err</a>)
+<a href=#105 id=105 data-nosnippet>105</a>        <span class="self">Self</span>::pyerr_from_err_with_translator::&lt;T, <a href="#378">ErrorNoPyErr</a>, <a href="#455">DowncastToPyErr</a>&gt;(<a href="#104">py</a>, <a href="#104">err</a>)
 <a href=#106 id=106 data-nosnippet>106</a>    }
 <a href=#107 id=107 data-nosnippet>107</a>
 <a href=#108 id=108 data-nosnippet>108</a>    <span class="doccomment">/// Transform an `err` implementing [`std::error::Error`] into a [`PyErr`]
@@ -139,7 +139,7 @@
 <a href=#139 id=139 data-nosnippet>139</a>
 <a href=#140 id=140 data-nosnippet>140</a>        <span class="kw">let </span><span class="kw-2">mut </span>chain = <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html">Vec</a>::<a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.new">new</a>();
 <a href=#141 id=141 data-nosnippet>141</a>
-<a href=#142 id=142 data-nosnippet>142</a>        <span class="kw">let </span><span class="kw-2">mut </span>source = <a href="#135">err</a>.<a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html#tymethod.source">source</a>();
+<a href=#142 id=142 data-nosnippet>142</a>        <span class="kw">let </span><span class="kw-2">mut </span>source = <a href="#135">err</a>.<a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html#method.source">source</a>();
 <a href=#143 id=143 data-nosnippet>143</a>        <span class="kw">let </span><span class="kw-2">mut </span>cause = <a class="prelude-val" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#variant.None">None</a>;
 <a href=#144 id=144 data-nosnippet>144</a>
 <a href=#145 id=145 data-nosnippet>145</a>        <span class="kw">while let </span><span class="prelude-val">Some</span>(err) = source.take() {
@@ -168,9 +168,9 @@
 <a href=#168 id=168 data-nosnippet>168</a>            cause = <span class="prelude-val">Some</span>(err);
 <a href=#169 id=169 data-nosnippet>169</a>        }
 <a href=#170 id=170 data-nosnippet>170</a>
-<a href=#171 id=171 data-nosnippet>171</a>        <span class="kw">let </span>err = <span class="kw">match </span>T::<a href="#309-312">try_from_err</a>::&lt;M&gt;(<a href="#126">py</a>, <a href="#135">err</a>) {
+<a href=#171 id=171 data-nosnippet>171</a>        <span class="kw">let </span>err = <span class="kw">match </span>T::try_from_err::&lt;M&gt;(<a href="#126">py</a>, <a href="#135">err</a>) {
 <a href=#172 id=172 data-nosnippet>172</a>            <a class="prelude-val" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#variant.Ok">Ok</a>(err) =&gt; <a href="#172">err</a>,
-<a href=#173 id=173 data-nosnippet>173</a>            <a class="prelude-val" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#variant.Err">Err</a>(err) =&gt; <a href="https://docs.rs/pyo3/0.27/pyo3/exceptions/struct.PyException.html">PyException</a>::<a href="https://docs.rs/pyo3/0.27/pyo3/exceptions/struct.PyException.html#method.new_err">new_err</a>(<a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"{err}"</span>)),
+<a href=#173 id=173 data-nosnippet>173</a>            <a class="prelude-val" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#variant.Err">Err</a>(err) =&gt; <a href="https://docs.rs/pyo3/0.27/pyo3/exceptions/struct.PyException.html">PyException</a>::<a href="https://docs.rs/pyo3/0.27/pyo3/exceptions/struct.PyException.html#method.new_err">new_err</a>(<a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"{err}"</span>)),
 <a href=#174 id=174 data-nosnippet>174</a>        };
 <a href=#175 id=175 data-nosnippet>175</a>        <a href="#171">err</a>.<a href="https://docs.rs/pyo3/0.27/pyo3/err/struct.PyErr.html#method.set_cause">set_cause</a>(<a href="#126">py</a>, <a href="#143">cause</a>);
 <a href=#176 id=176 data-nosnippet>176</a>
@@ -237,8 +237,8 @@
 <a href=#237 id=237 data-nosnippet>237</a>    </span><span class="kw">pub fn </span>clone_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, py: <a href="https://docs.rs/pyo3/0.27/pyo3/marker/struct.Python.html">Python</a>) -&gt; <span class="self">Self </span>{
 <a href=#238 id=238 data-nosnippet>238</a>        <span class="self">Self </span>{
 <a href=#239 id=239 data-nosnippet>239</a>            err: <a class="self" href="#237">self</a>.err.<a href="https://docs.rs/pyo3/0.27/pyo3/err/struct.PyErr.html#method.clone_ref">clone_ref</a>(<a href="#237">py</a>),
-<a href=#240 id=240 data-nosnippet>240</a>            cause: <span class="self"><a href="#237">self</a>
-<a href=#241 id=241 data-nosnippet>241</a>                </span>.cause
+<a href=#240 id=240 data-nosnippet>240</a>            cause: <a class="self" href="#237">self</a>
+<a href=#241 id=241 data-nosnippet>241</a>                .cause
 <a href=#242 id=242 data-nosnippet>242</a>                .<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.as_ref">as_ref</a>()
 <a href=#243 id=243 data-nosnippet>243</a>                .<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|cause| <a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html">Box</a>::<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.new">new</a>(<a href="#243">cause</a>.<a href="#237-245">clone_ref</a>(<a href="#237">py</a>))),
 <a href=#244 id=244 data-nosnippet>244</a>        }
@@ -391,8 +391,8 @@
 <a href=#391 id=391 data-nosnippet>391</a>        _py: <a href="https://docs.rs/pyo3/0.27/pyo3/marker/struct.Python.html">Python</a>,
 <a href=#392 id=392 data-nosnippet>392</a>        _err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> + <span class="lifetime">'static</span>),
 <a href=#393 id=393 data-nosnippet>393</a>    ) -&gt; <a class="prelude-ty" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html">Option</a>&lt;<a href="https://docs.rs/pyo3/0.27/pyo3/err/struct.PyErr.html">PyErr</a>&gt; {
-<a href=#394 id=394 data-nosnippet>394</a>        <a class="prelude-val" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#variant.None"><a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#variant.None">None</a>
-<a href=#395 id=395 data-nosnippet>395</a>    </a>}
+<a href=#394 id=394 data-nosnippet>394</a>        <a class="prelude-val" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#variant.None">None</a>
+<a href=#395 id=395 data-nosnippet>395</a>    }
 <a href=#396 id=396 data-nosnippet>396</a>}
 <a href=#397 id=397 data-nosnippet>397</a>
 <a href=#398 id=398 data-nosnippet>398</a><span class="doccomment">/// Translate [`std::io::Error`] to [`PyErr`] when used as [`AnyErrorToPyErr`].
@@ -445,7 +445,7 @@
 <a href=#445 id=445 data-nosnippet>445</a>                }
 <a href=#446 id=446 data-nosnippet>446</a>            }
 <a href=#447 id=447 data-nosnippet>447</a>
-<a href=#448 id=448 data-nosnippet>448</a>            <a href="https://docs.rs/pyo3/0.27/pyo3/err/struct.PyErr.html">PyErr</a>::<a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from">from</a>(io::<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html">Error</a>::<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html#method.new">new</a>(<a href="#435">err</a>.<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html#method.kind">kind</a>(), <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"{err}"</span>)))
+<a href=#448 id=448 data-nosnippet>448</a>            <a href="https://docs.rs/pyo3/0.27/pyo3/err/struct.PyErr.html">PyErr</a>::<a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from">from</a>(io::<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html">Error</a>::<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html#method.new">new</a>(<a href="#435">err</a>.<a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html#method.kind">kind</a>(), <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"{err}"</span>)))
 <a href=#449 id=449 data-nosnippet>449</a>        })
 <a href=#450 id=450 data-nosnippet>450</a>    }
 <a href=#451 id=451 data-nosnippet>451</a>}
@@ -512,10 +512,10 @@
 <a href=#512 id=512 data-nosnippet>512</a>
 <a href=#513 id=513 data-nosnippet>513</a>    <span class="attr">#[allow(clippy::expect_used)] </span><span class="comment">// failure is a Python bug
 <a href=#514 id=514 data-nosnippet>514</a>    </span><span class="kw">let </span>code = <a href="#499">compile</a>
-<a href=#515 id=515 data-nosnippet>515</a>        .<a href="https://docs.rs/pyo3/0.27/pyo3/types/any/trait.PyAnyMethods.html#tymethod.call1">call1</a>((<a href="#507">code</a>, <a href="#490">file</a>, <a class="macro" href="https://docs.rs/pyo3/0.27/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"exec"</span>)))
+<a href=#515 id=515 data-nosnippet>515</a>        .<a href="https://docs.rs/pyo3/0.27/pyo3/types/any/trait.PyAnyMethods.html#tymethod.call1">call1</a>((<a href="#507">code</a>, <a href="#490">file</a>, <a href="https://docs.rs/pyo3/0.27/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"exec"</span>)))
 <a href=#516 id=516 data-nosnippet>516</a>        .<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect">expect</a>(<span class="string">"failed to compile PyErr location helper"</span>);
 <a href=#517 id=517 data-nosnippet>517</a>    <span class="attr">#[allow(clippy::expect_used)] </span><span class="comment">// failure is a Python bug
-<a href=#518 id=518 data-nosnippet>518</a>    </span><span class="kw">let </span>globals = [(<a class="macro" href="https://docs.rs/pyo3/0.27/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"err"</span>), <a href="#490">err</a>)]
+<a href=#518 id=518 data-nosnippet>518</a>    </span><span class="kw">let </span>globals = [(<a href="https://docs.rs/pyo3/0.27/pyo3/macro.intern.html">intern!</a>(py, <span class="string">"err"</span>), <a href="#490">err</a>)]
 <a href=#519 id=519 data-nosnippet>519</a>        .<a href="https://docs.rs/pyo3/0.27/pyo3/types/dict/trait.IntoPyDict.html#tymethod.into_py_dict">into_py_dict</a>(<a href="#490">py</a>)
 <a href=#520 id=520 data-nosnippet>520</a>        .<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect">expect</a>(<span class="string">"failed to create a dict(err=...)"</span>);
 <a href=#521 id=521 data-nosnippet>521</a>
@@ -525,172 +525,171 @@
 <a href=#525 id=525 data-nosnippet>525</a>}
 <a href=#526 id=526 data-nosnippet>526</a>
 <a href=#527 id=527 data-nosnippet>527</a><span class="attr">#[cfg(test)]
-<a href=#528 id=528 data-nosnippet>528</a></span><span class="kw">mod </span>tests {
-<a href=#529 id=529 data-nosnippet>529</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
-<a href=#530 id=530 data-nosnippet>530</a>
-<a href=#531 id=531 data-nosnippet>531</a>    <span class="attr">#[test]
-<a href=#532 id=532 data-nosnippet>532</a>    </span><span class="kw">fn </span>python_cause() {
-<a href=#533 id=533 data-nosnippet>533</a>        Python::attach(|py| {
-<a href=#534 id=534 data-nosnippet>534</a>            <span class="kw">let </span>err = py
-<a href=#535 id=535 data-nosnippet>535</a>                .run(
-<a href=#536 id=536 data-nosnippet>536</a>                    <span class="kw-2">&amp;</span>std::ffi::CString::new(
-<a href=#537 id=537 data-nosnippet>537</a>                        <span class="string">r#"
-<a href=#538 id=538 data-nosnippet>538</a>try:
-<a href=#539 id=539 data-nosnippet>539</a>    try:
-<a href=#540 id=540 data-nosnippet>540</a>        raise Exception("source")
-<a href=#541 id=541 data-nosnippet>541</a>    except Exception as err:
-<a href=#542 id=542 data-nosnippet>542</a>        raise IndexError("middle") from err
-<a href=#543 id=543 data-nosnippet>543</a>except Exception as err:
-<a href=#544 id=544 data-nosnippet>544</a>    raise LookupError("top") from err
-<a href=#545 id=545 data-nosnippet>545</a>"#</span>,
-<a href=#546 id=546 data-nosnippet>546</a>                    )
-<a href=#547 id=547 data-nosnippet>547</a>                    .unwrap(),
-<a href=#548 id=548 data-nosnippet>548</a>                    <span class="prelude-val">None</span>,
+<a href=#528 id=528 data-nosnippet>528</a>#[allow(clippy::expect_used, clippy::unwrap_used)]
+<a href=#529 id=529 data-nosnippet>529</a></span><span class="kw">mod </span>tests {
+<a href=#530 id=530 data-nosnippet>530</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#531 id=531 data-nosnippet>531</a>
+<a href=#532 id=532 data-nosnippet>532</a>    <span class="attr">#[test]
+<a href=#533 id=533 data-nosnippet>533</a>    </span><span class="kw">fn </span>python_cause() {
+<a href=#534 id=534 data-nosnippet>534</a>        Python::attach(|py| {
+<a href=#535 id=535 data-nosnippet>535</a>            <span class="kw">let </span>err = py
+<a href=#536 id=536 data-nosnippet>536</a>                .run(
+<a href=#537 id=537 data-nosnippet>537</a>                    <span class="kw-2">&amp;</span>std::ffi::CString::new(
+<a href=#538 id=538 data-nosnippet>538</a>                        <span class="string">r#"
+<a href=#539 id=539 data-nosnippet>539</a>try:
+<a href=#540 id=540 data-nosnippet>540</a>    try:
+<a href=#541 id=541 data-nosnippet>541</a>        raise Exception("source")
+<a href=#542 id=542 data-nosnippet>542</a>    except Exception as err:
+<a href=#543 id=543 data-nosnippet>543</a>        raise IndexError("middle") from err
+<a href=#544 id=544 data-nosnippet>544</a>except Exception as err:
+<a href=#545 id=545 data-nosnippet>545</a>    raise LookupError("top") from err
+<a href=#546 id=546 data-nosnippet>546</a>"#</span>,
+<a href=#547 id=547 data-nosnippet>547</a>                    )
+<a href=#548 id=548 data-nosnippet>548</a>                    .unwrap(),
 <a href=#549 id=549 data-nosnippet>549</a>                    <span class="prelude-val">None</span>,
-<a href=#550 id=550 data-nosnippet>550</a>                )
-<a href=#551 id=551 data-nosnippet>551</a>                .expect_err(<span class="string">"raise must raise"</span>);
-<a href=#552 id=552 data-nosnippet>552</a>
-<a href=#553 id=553 data-nosnippet>553</a>            <span class="kw">let </span>err = PyErrChain::new(py, err);
-<a href=#554 id=554 data-nosnippet>554</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"LookupError: top"</span>);
-<a href=#555 id=555 data-nosnippet>555</a>
-<a href=#556 id=556 data-nosnippet>556</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
-<a href=#557 id=557 data-nosnippet>557</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"IndexError: middle"</span>);
-<a href=#558 id=558 data-nosnippet>558</a>
-<a href=#559 id=559 data-nosnippet>559</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
-<a href=#560 id=560 data-nosnippet>560</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: source"</span>);
-<a href=#561 id=561 data-nosnippet>561</a>
-<a href=#562 id=562 data-nosnippet>562</a>            <span class="macro">assert!</span>(err.source().is_none());
-<a href=#563 id=563 data-nosnippet>563</a>        })
-<a href=#564 id=564 data-nosnippet>564</a>    }
-<a href=#565 id=565 data-nosnippet>565</a>
-<a href=#566 id=566 data-nosnippet>566</a>    <span class="attr">#[test]
-<a href=#567 id=567 data-nosnippet>567</a>    </span><span class="kw">fn </span>rust_source() {
-<a href=#568 id=568 data-nosnippet>568</a>        <span class="attr">#[derive(Debug)]
-<a href=#569 id=569 data-nosnippet>569</a>        </span><span class="kw">struct </span>MyErr {
-<a href=#570 id=570 data-nosnippet>570</a>            msg: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
-<a href=#571 id=571 data-nosnippet>571</a>            source: <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="self">Self</span>&gt;&gt;,
-<a href=#572 id=572 data-nosnippet>572</a>        }
-<a href=#573 id=573 data-nosnippet>573</a>
-<a href=#574 id=574 data-nosnippet>574</a>        <span class="kw">impl </span>fmt::Display <span class="kw">for </span>MyErr {
-<a href=#575 id=575 data-nosnippet>575</a>            <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-<a href=#576 id=576 data-nosnippet>576</a>                fmt.write_str(<span class="self">self</span>.msg)
-<a href=#577 id=577 data-nosnippet>577</a>            }
-<a href=#578 id=578 data-nosnippet>578</a>        }
-<a href=#579 id=579 data-nosnippet>579</a>
-<a href=#580 id=580 data-nosnippet>580</a>        <span class="kw">impl </span>Error <span class="kw">for </span>MyErr {
-<a href=#581 id=581 data-nosnippet>581</a>            <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>Error + <span class="lifetime">'static</span>)&gt; {
-<a href=#582 id=582 data-nosnippet>582</a>                <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.source {
-<a href=#583 id=583 data-nosnippet>583</a>                    <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
-<a href=#584 id=584 data-nosnippet>584</a>                    <span class="prelude-val">Some</span>(source) =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">&amp;**</span>source <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Error),
-<a href=#585 id=585 data-nosnippet>585</a>                }
-<a href=#586 id=586 data-nosnippet>586</a>            }
-<a href=#587 id=587 data-nosnippet>587</a>        }
-<a href=#588 id=588 data-nosnippet>588</a>
-<a href=#589 id=589 data-nosnippet>589</a>        Python::attach(|py| {
-<a href=#590 id=590 data-nosnippet>590</a>            <span class="kw">let </span>err = PyErrChain::new(
-<a href=#591 id=591 data-nosnippet>591</a>                py,
-<a href=#592 id=592 data-nosnippet>592</a>                MyErr {
-<a href=#593 id=593 data-nosnippet>593</a>                    msg: <span class="string">"top"</span>,
-<a href=#594 id=594 data-nosnippet>594</a>                    source: <span class="prelude-val">Some</span>(Box::new(MyErr {
-<a href=#595 id=595 data-nosnippet>595</a>                        msg: <span class="string">"middle"</span>,
-<a href=#596 id=596 data-nosnippet>596</a>                        source: <span class="prelude-val">Some</span>(Box::new(MyErr {
-<a href=#597 id=597 data-nosnippet>597</a>                            msg: <span class="string">"source"</span>,
-<a href=#598 id=598 data-nosnippet>598</a>                            source: <span class="prelude-val">None</span>,
-<a href=#599 id=599 data-nosnippet>599</a>                        })),
-<a href=#600 id=600 data-nosnippet>600</a>                    })),
-<a href=#601 id=601 data-nosnippet>601</a>                },
-<a href=#602 id=602 data-nosnippet>602</a>            );
-<a href=#603 id=603 data-nosnippet>603</a>
-<a href=#604 id=604 data-nosnippet>604</a>            <span class="kw">let </span>source = err.source().expect(<span class="string">"must have source"</span>);
-<a href=#605 id=605 data-nosnippet>605</a>            <span class="kw">let </span>source = source.source().expect(<span class="string">"must have source"</span>);
-<a href=#606 id=606 data-nosnippet>606</a>            <span class="macro">assert!</span>(source.source().is_none());
-<a href=#607 id=607 data-nosnippet>607</a>
-<a href=#608 id=608 data-nosnippet>608</a>            <span class="kw">let </span>err = PyErr::from(err);
-<a href=#609 id=609 data-nosnippet>609</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: top"</span>);
-<a href=#610 id=610 data-nosnippet>610</a>
-<a href=#611 id=611 data-nosnippet>611</a>            <span class="kw">let </span>err = err.cause(py).expect(<span class="string">"must have cause"</span>);
-<a href=#612 id=612 data-nosnippet>612</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: middle"</span>);
-<a href=#613 id=613 data-nosnippet>613</a>
-<a href=#614 id=614 data-nosnippet>614</a>            <span class="kw">let </span>err = err.cause(py).expect(<span class="string">"must have cause"</span>);
-<a href=#615 id=615 data-nosnippet>615</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: source"</span>);
-<a href=#616 id=616 data-nosnippet>616</a>
-<a href=#617 id=617 data-nosnippet>617</a>            <span class="macro">assert!</span>(err.cause(py).is_none());
-<a href=#618 id=618 data-nosnippet>618</a>        })
-<a href=#619 id=619 data-nosnippet>619</a>    }
-<a href=#620 id=620 data-nosnippet>620</a>
-<a href=#621 id=621 data-nosnippet>621</a>    <span class="attr">#[test]
-<a href=#622 id=622 data-nosnippet>622</a>    </span><span class="kw">fn </span>err_location() {
-<a href=#623 id=623 data-nosnippet>623</a>        Python::attach(|py| {
-<a href=#624 id=624 data-nosnippet>624</a>            <span class="kw">let </span>err = err_with_location(py, PyException::new_err(<span class="string">"oh no"</span>), <span class="string">"foo.rs"</span>, <span class="number">27</span>, <span class="number">15</span>);
-<a href=#625 id=625 data-nosnippet>625</a>
-<a href=#626 id=626 data-nosnippet>626</a>            <span class="comment">// check the message, location traceback, and cause for the root error
-<a href=#627 id=627 data-nosnippet>627</a>            </span><span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: oh no"</span>);
-<a href=#628 id=628 data-nosnippet>628</a>            <span class="macro">assert_eq!</span>(
-<a href=#629 id=629 data-nosnippet>629</a>                err.traceback(py)
-<a href=#630 id=630 data-nosnippet>630</a>                    .expect(<span class="string">"must have traceback"</span>)
-<a href=#631 id=631 data-nosnippet>631</a>                    .format()
-<a href=#632 id=632 data-nosnippet>632</a>                    .expect(<span class="string">"traceback must be formattable"</span>),
-<a href=#633 id=633 data-nosnippet>633</a>                <span class="string">r#"Traceback (most recent call last):
-<a href=#634 id=634 data-nosnippet>634</a>  File "foo.rs", line 27, in &lt;module&gt;
-<a href=#635 id=635 data-nosnippet>635</a>"#</span>,
-<a href=#636 id=636 data-nosnippet>636</a>            );
-<a href=#637 id=637 data-nosnippet>637</a>            <span class="macro">assert!</span>(err.cause(py).is_none());
-<a href=#638 id=638 data-nosnippet>638</a>
-<a href=#639 id=639 data-nosnippet>639</a>            <span class="comment">// add an extra level of location traceback to the root error
-<a href=#640 id=640 data-nosnippet>640</a>            </span><span class="kw">let </span>err = err_with_location(py, err, <span class="string">"bar.rs"</span>, <span class="number">24</span>, <span class="number">18</span>);
-<a href=#641 id=641 data-nosnippet>641</a>
-<a href=#642 id=642 data-nosnippet>642</a>            <span class="comment">// create a new top-level error, caused by the root error
-<a href=#643 id=643 data-nosnippet>643</a>            </span><span class="kw">let </span>top = PyException::new_err(<span class="string">"oh yes"</span>);
-<a href=#644 id=644 data-nosnippet>644</a>            top.set_cause(py, <span class="prelude-val">Some</span>(err));
-<a href=#645 id=645 data-nosnippet>645</a>            <span class="kw">let </span>err = err_with_location(py, top, <span class="string">"baz.rs"</span>, <span class="number">41</span>, <span class="number">1</span>);
-<a href=#646 id=646 data-nosnippet>646</a>
-<a href=#647 id=647 data-nosnippet>647</a>            <span class="comment">// check the message and location traceback for the top-level error
-<a href=#648 id=648 data-nosnippet>648</a>            </span><span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: oh yes"</span>);
-<a href=#649 id=649 data-nosnippet>649</a>            <span class="macro">assert_eq!</span>(
-<a href=#650 id=650 data-nosnippet>650</a>                err.traceback(py)
-<a href=#651 id=651 data-nosnippet>651</a>                    .expect(<span class="string">"must have traceback"</span>)
-<a href=#652 id=652 data-nosnippet>652</a>                    .format()
-<a href=#653 id=653 data-nosnippet>653</a>                    .expect(<span class="string">"traceback must be formattable"</span>),
-<a href=#654 id=654 data-nosnippet>654</a>                <span class="string">r#"Traceback (most recent call last):
-<a href=#655 id=655 data-nosnippet>655</a>  File "baz.rs", line 41, in &lt;module&gt;
-<a href=#656 id=656 data-nosnippet>656</a>"#</span>,
-<a href=#657 id=657 data-nosnippet>657</a>            );
-<a href=#658 id=658 data-nosnippet>658</a>
-<a href=#659 id=659 data-nosnippet>659</a>            <span class="comment">// ensure that the top-level error has a cause
-<a href=#660 id=660 data-nosnippet>660</a>            </span><span class="kw">let </span>cause = err.cause(py).expect(<span class="string">"must have a cause"</span>);
-<a href=#661 id=661 data-nosnippet>661</a>
-<a href=#662 id=662 data-nosnippet>662</a>            <span class="comment">// check the message, extended location traceback, and cause for the root error
-<a href=#663 id=663 data-nosnippet>663</a>            </span><span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{cause}"</span>), <span class="string">"Exception: oh no"</span>);
-<a href=#664 id=664 data-nosnippet>664</a>            <span class="macro">assert_eq!</span>(
-<a href=#665 id=665 data-nosnippet>665</a>                cause
-<a href=#666 id=666 data-nosnippet>666</a>                    .traceback(py)
-<a href=#667 id=667 data-nosnippet>667</a>                    .expect(<span class="string">"must have traceback"</span>)
-<a href=#668 id=668 data-nosnippet>668</a>                    .format()
-<a href=#669 id=669 data-nosnippet>669</a>                    .expect(<span class="string">"traceback must be formattable"</span>),
-<a href=#670 id=670 data-nosnippet>670</a>                <span class="string">r#"Traceback (most recent call last):
-<a href=#671 id=671 data-nosnippet>671</a>  File "bar.rs", line 24, in &lt;module&gt;
-<a href=#672 id=672 data-nosnippet>672</a>  File "foo.rs", line 27, in &lt;module&gt;
-<a href=#673 id=673 data-nosnippet>673</a>"#</span>,
-<a href=#674 id=674 data-nosnippet>674</a>            );
-<a href=#675 id=675 data-nosnippet>675</a>            <span class="macro">assert!</span>(cause.cause(py).is_none());
-<a href=#676 id=676 data-nosnippet>676</a>        })
-<a href=#677 id=677 data-nosnippet>677</a>    }
-<a href=#678 id=678 data-nosnippet>678</a>
-<a href=#679 id=679 data-nosnippet>679</a>    <span class="attr">#[test]
-<a href=#680 id=680 data-nosnippet>680</a>    </span><span class="kw">fn </span>anyhow() {
-<a href=#681 id=681 data-nosnippet>681</a>        Python::attach(|py| {
-<a href=#682 id=682 data-nosnippet>682</a>            <span class="kw">let </span>err = <span class="macro">anyhow::anyhow!</span>(<span class="string">"source"</span>).context(<span class="string">"middle"</span>).context(<span class="string">"top"</span>);
-<a href=#683 id=683 data-nosnippet>683</a>
-<a href=#684 id=684 data-nosnippet>684</a>            <span class="kw">let </span>err = PyErrChain::new(py, err);
-<a href=#685 id=685 data-nosnippet>685</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: top"</span>);
-<a href=#686 id=686 data-nosnippet>686</a>
-<a href=#687 id=687 data-nosnippet>687</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
-<a href=#688 id=688 data-nosnippet>688</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: middle"</span>);
-<a href=#689 id=689 data-nosnippet>689</a>
-<a href=#690 id=690 data-nosnippet>690</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
-<a href=#691 id=691 data-nosnippet>691</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: source"</span>);
-<a href=#692 id=692 data-nosnippet>692</a>
-<a href=#693 id=693 data-nosnippet>693</a>            <span class="macro">assert!</span>(err.source().is_none());
-<a href=#694 id=694 data-nosnippet>694</a>        })
-<a href=#695 id=695 data-nosnippet>695</a>    }
-<a href=#696 id=696 data-nosnippet>696</a>}</code></pre></div></section></main></body></html>
+<a href=#550 id=550 data-nosnippet>550</a>                    <span class="prelude-val">None</span>,
+<a href=#551 id=551 data-nosnippet>551</a>                )
+<a href=#552 id=552 data-nosnippet>552</a>                .expect_err(<span class="string">"raise must raise"</span>);
+<a href=#553 id=553 data-nosnippet>553</a>
+<a href=#554 id=554 data-nosnippet>554</a>            <span class="kw">let </span>err = PyErrChain::new(py, err);
+<a href=#555 id=555 data-nosnippet>555</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"LookupError: top"</span>);
+<a href=#556 id=556 data-nosnippet>556</a>
+<a href=#557 id=557 data-nosnippet>557</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
+<a href=#558 id=558 data-nosnippet>558</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"IndexError: middle"</span>);
+<a href=#559 id=559 data-nosnippet>559</a>
+<a href=#560 id=560 data-nosnippet>560</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
+<a href=#561 id=561 data-nosnippet>561</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: source"</span>);
+<a href=#562 id=562 data-nosnippet>562</a>
+<a href=#563 id=563 data-nosnippet>563</a>            <span class="macro">assert!</span>(err.source().is_none());
+<a href=#564 id=564 data-nosnippet>564</a>        });
+<a href=#565 id=565 data-nosnippet>565</a>    }
+<a href=#566 id=566 data-nosnippet>566</a>
+<a href=#567 id=567 data-nosnippet>567</a>    <span class="attr">#[test]
+<a href=#568 id=568 data-nosnippet>568</a>    </span><span class="kw">fn </span>rust_source() {
+<a href=#569 id=569 data-nosnippet>569</a>        <span class="attr">#[derive(Debug)]
+<a href=#570 id=570 data-nosnippet>570</a>        </span><span class="kw">struct </span>MyErr {
+<a href=#571 id=571 data-nosnippet>571</a>            msg: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+<a href=#572 id=572 data-nosnippet>572</a>            source: <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="self">Self</span>&gt;&gt;,
+<a href=#573 id=573 data-nosnippet>573</a>        }
+<a href=#574 id=574 data-nosnippet>574</a>
+<a href=#575 id=575 data-nosnippet>575</a>        <span class="kw">impl </span>fmt::Display <span class="kw">for </span>MyErr {
+<a href=#576 id=576 data-nosnippet>576</a>            <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+<a href=#577 id=577 data-nosnippet>577</a>                fmt.write_str(<span class="self">self</span>.msg)
+<a href=#578 id=578 data-nosnippet>578</a>            }
+<a href=#579 id=579 data-nosnippet>579</a>        }
+<a href=#580 id=580 data-nosnippet>580</a>
+<a href=#581 id=581 data-nosnippet>581</a>        <span class="kw">impl </span>Error <span class="kw">for </span>MyErr {
+<a href=#582 id=582 data-nosnippet>582</a>            <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>Error + <span class="lifetime">'static</span>)&gt; {
+<a href=#583 id=583 data-nosnippet>583</a>                <span class="self">self</span>.source.as_ref().map(|source| <span class="kw-2">&amp;**</span>source <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Error)
+<a href=#584 id=584 data-nosnippet>584</a>            }
+<a href=#585 id=585 data-nosnippet>585</a>        }
+<a href=#586 id=586 data-nosnippet>586</a>
+<a href=#587 id=587 data-nosnippet>587</a>        Python::attach(|py| {
+<a href=#588 id=588 data-nosnippet>588</a>            <span class="kw">let </span>err = PyErrChain::new(
+<a href=#589 id=589 data-nosnippet>589</a>                py,
+<a href=#590 id=590 data-nosnippet>590</a>                MyErr {
+<a href=#591 id=591 data-nosnippet>591</a>                    msg: <span class="string">"top"</span>,
+<a href=#592 id=592 data-nosnippet>592</a>                    source: <span class="prelude-val">Some</span>(Box::new(MyErr {
+<a href=#593 id=593 data-nosnippet>593</a>                        msg: <span class="string">"middle"</span>,
+<a href=#594 id=594 data-nosnippet>594</a>                        source: <span class="prelude-val">Some</span>(Box::new(MyErr {
+<a href=#595 id=595 data-nosnippet>595</a>                            msg: <span class="string">"source"</span>,
+<a href=#596 id=596 data-nosnippet>596</a>                            source: <span class="prelude-val">None</span>,
+<a href=#597 id=597 data-nosnippet>597</a>                        })),
+<a href=#598 id=598 data-nosnippet>598</a>                    })),
+<a href=#599 id=599 data-nosnippet>599</a>                },
+<a href=#600 id=600 data-nosnippet>600</a>            );
+<a href=#601 id=601 data-nosnippet>601</a>
+<a href=#602 id=602 data-nosnippet>602</a>            <span class="kw">let </span>source = err.source().expect(<span class="string">"must have source"</span>);
+<a href=#603 id=603 data-nosnippet>603</a>            <span class="kw">let </span>source = source.source().expect(<span class="string">"must have source"</span>);
+<a href=#604 id=604 data-nosnippet>604</a>            <span class="macro">assert!</span>(source.source().is_none());
+<a href=#605 id=605 data-nosnippet>605</a>
+<a href=#606 id=606 data-nosnippet>606</a>            <span class="kw">let </span>err = PyErr::from(err);
+<a href=#607 id=607 data-nosnippet>607</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: top"</span>);
+<a href=#608 id=608 data-nosnippet>608</a>
+<a href=#609 id=609 data-nosnippet>609</a>            <span class="kw">let </span>err = err.cause(py).expect(<span class="string">"must have cause"</span>);
+<a href=#610 id=610 data-nosnippet>610</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: middle"</span>);
+<a href=#611 id=611 data-nosnippet>611</a>
+<a href=#612 id=612 data-nosnippet>612</a>            <span class="kw">let </span>err = err.cause(py).expect(<span class="string">"must have cause"</span>);
+<a href=#613 id=613 data-nosnippet>613</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: source"</span>);
+<a href=#614 id=614 data-nosnippet>614</a>
+<a href=#615 id=615 data-nosnippet>615</a>            <span class="macro">assert!</span>(err.cause(py).is_none());
+<a href=#616 id=616 data-nosnippet>616</a>        });
+<a href=#617 id=617 data-nosnippet>617</a>    }
+<a href=#618 id=618 data-nosnippet>618</a>
+<a href=#619 id=619 data-nosnippet>619</a>    <span class="attr">#[test]
+<a href=#620 id=620 data-nosnippet>620</a>    </span><span class="kw">fn </span>err_location() {
+<a href=#621 id=621 data-nosnippet>621</a>        Python::attach(|py| {
+<a href=#622 id=622 data-nosnippet>622</a>            <span class="kw">let </span>err = err_with_location(py, PyException::new_err(<span class="string">"oh no"</span>), <span class="string">"foo.rs"</span>, <span class="number">27</span>, <span class="number">15</span>);
+<a href=#623 id=623 data-nosnippet>623</a>
+<a href=#624 id=624 data-nosnippet>624</a>            <span class="comment">// check the message, location traceback, and cause for the root error
+<a href=#625 id=625 data-nosnippet>625</a>            </span><span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: oh no"</span>);
+<a href=#626 id=626 data-nosnippet>626</a>            <span class="macro">assert_eq!</span>(
+<a href=#627 id=627 data-nosnippet>627</a>                err.traceback(py)
+<a href=#628 id=628 data-nosnippet>628</a>                    .expect(<span class="string">"must have traceback"</span>)
+<a href=#629 id=629 data-nosnippet>629</a>                    .format()
+<a href=#630 id=630 data-nosnippet>630</a>                    .expect(<span class="string">"traceback must be formattable"</span>),
+<a href=#631 id=631 data-nosnippet>631</a>                <span class="string">r#"Traceback (most recent call last):
+<a href=#632 id=632 data-nosnippet>632</a>  File "foo.rs", line 27, in &lt;module&gt;
+<a href=#633 id=633 data-nosnippet>633</a>"#</span>,
+<a href=#634 id=634 data-nosnippet>634</a>            );
+<a href=#635 id=635 data-nosnippet>635</a>            <span class="macro">assert!</span>(err.cause(py).is_none());
+<a href=#636 id=636 data-nosnippet>636</a>
+<a href=#637 id=637 data-nosnippet>637</a>            <span class="comment">// add an extra level of location traceback to the root error
+<a href=#638 id=638 data-nosnippet>638</a>            </span><span class="kw">let </span>err = err_with_location(py, err, <span class="string">"bar.rs"</span>, <span class="number">24</span>, <span class="number">18</span>);
+<a href=#639 id=639 data-nosnippet>639</a>
+<a href=#640 id=640 data-nosnippet>640</a>            <span class="comment">// create a new top-level error, caused by the root error
+<a href=#641 id=641 data-nosnippet>641</a>            </span><span class="kw">let </span>top = PyException::new_err(<span class="string">"oh yes"</span>);
+<a href=#642 id=642 data-nosnippet>642</a>            top.set_cause(py, <span class="prelude-val">Some</span>(err));
+<a href=#643 id=643 data-nosnippet>643</a>            <span class="kw">let </span>err = err_with_location(py, top, <span class="string">"baz.rs"</span>, <span class="number">41</span>, <span class="number">1</span>);
+<a href=#644 id=644 data-nosnippet>644</a>
+<a href=#645 id=645 data-nosnippet>645</a>            <span class="comment">// check the message and location traceback for the top-level error
+<a href=#646 id=646 data-nosnippet>646</a>            </span><span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: oh yes"</span>);
+<a href=#647 id=647 data-nosnippet>647</a>            <span class="macro">assert_eq!</span>(
+<a href=#648 id=648 data-nosnippet>648</a>                err.traceback(py)
+<a href=#649 id=649 data-nosnippet>649</a>                    .expect(<span class="string">"must have traceback"</span>)
+<a href=#650 id=650 data-nosnippet>650</a>                    .format()
+<a href=#651 id=651 data-nosnippet>651</a>                    .expect(<span class="string">"traceback must be formattable"</span>),
+<a href=#652 id=652 data-nosnippet>652</a>                <span class="string">r#"Traceback (most recent call last):
+<a href=#653 id=653 data-nosnippet>653</a>  File "baz.rs", line 41, in &lt;module&gt;
+<a href=#654 id=654 data-nosnippet>654</a>"#</span>,
+<a href=#655 id=655 data-nosnippet>655</a>            );
+<a href=#656 id=656 data-nosnippet>656</a>
+<a href=#657 id=657 data-nosnippet>657</a>            <span class="comment">// ensure that the top-level error has a cause
+<a href=#658 id=658 data-nosnippet>658</a>            </span><span class="kw">let </span>cause = err.cause(py).expect(<span class="string">"must have a cause"</span>);
+<a href=#659 id=659 data-nosnippet>659</a>
+<a href=#660 id=660 data-nosnippet>660</a>            <span class="comment">// check the message, extended location traceback, and cause for the root error
+<a href=#661 id=661 data-nosnippet>661</a>            </span><span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{cause}"</span>), <span class="string">"Exception: oh no"</span>);
+<a href=#662 id=662 data-nosnippet>662</a>            <span class="macro">assert_eq!</span>(
+<a href=#663 id=663 data-nosnippet>663</a>                cause
+<a href=#664 id=664 data-nosnippet>664</a>                    .traceback(py)
+<a href=#665 id=665 data-nosnippet>665</a>                    .expect(<span class="string">"must have traceback"</span>)
+<a href=#666 id=666 data-nosnippet>666</a>                    .format()
+<a href=#667 id=667 data-nosnippet>667</a>                    .expect(<span class="string">"traceback must be formattable"</span>),
+<a href=#668 id=668 data-nosnippet>668</a>                <span class="string">r#"Traceback (most recent call last):
+<a href=#669 id=669 data-nosnippet>669</a>  File "bar.rs", line 24, in &lt;module&gt;
+<a href=#670 id=670 data-nosnippet>670</a>  File "foo.rs", line 27, in &lt;module&gt;
+<a href=#671 id=671 data-nosnippet>671</a>"#</span>,
+<a href=#672 id=672 data-nosnippet>672</a>            );
+<a href=#673 id=673 data-nosnippet>673</a>            <span class="macro">assert!</span>(cause.cause(py).is_none());
+<a href=#674 id=674 data-nosnippet>674</a>        });
+<a href=#675 id=675 data-nosnippet>675</a>    }
+<a href=#676 id=676 data-nosnippet>676</a>
+<a href=#677 id=677 data-nosnippet>677</a>    <span class="attr">#[test]
+<a href=#678 id=678 data-nosnippet>678</a>    </span><span class="kw">fn </span>anyhow() {
+<a href=#679 id=679 data-nosnippet>679</a>        Python::attach(|py| {
+<a href=#680 id=680 data-nosnippet>680</a>            <span class="kw">let </span>err = <span class="macro">anyhow::anyhow!</span>(<span class="string">"source"</span>).context(<span class="string">"middle"</span>).context(<span class="string">"top"</span>);
+<a href=#681 id=681 data-nosnippet>681</a>
+<a href=#682 id=682 data-nosnippet>682</a>            <span class="kw">let </span>err = PyErrChain::new(py, err);
+<a href=#683 id=683 data-nosnippet>683</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: top"</span>);
+<a href=#684 id=684 data-nosnippet>684</a>
+<a href=#685 id=685 data-nosnippet>685</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
+<a href=#686 id=686 data-nosnippet>686</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: middle"</span>);
+<a href=#687 id=687 data-nosnippet>687</a>
+<a href=#688 id=688 data-nosnippet>688</a>            <span class="kw">let </span>err = err.source().expect(<span class="string">"must have source"</span>);
+<a href=#689 id=689 data-nosnippet>689</a>            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{err}"</span>), <span class="string">"Exception: source"</span>);
+<a href=#690 id=690 data-nosnippet>690</a>
+<a href=#691 id=691 data-nosnippet>691</a>            <span class="macro">assert!</span>(err.source().is_none());
+<a href=#692 id=692 data-nosnippet>692</a>        });
+<a href=#693 id=693 data-nosnippet>693</a>    }
+<a href=#694 id=694 data-nosnippet>694</a>}
+</code></pre></div></section></main></body></html>
