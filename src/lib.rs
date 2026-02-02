@@ -525,6 +525,7 @@ pub fn err_with_location(py: Python, err: PyErr, file: &str, line: u32, column: 
 }
 
 #[cfg(test)]
+#[allow(clippy::expect_used, clippy::unwrap_used)]
 mod tests {
     use super::*;
 
@@ -560,7 +561,7 @@ except Exception as err:
             assert_eq!(format!("{err}"), "Exception: source");
 
             assert!(err.source().is_none());
-        })
+        });
     }
 
     #[test]
@@ -579,10 +580,7 @@ except Exception as err:
 
         impl Error for MyErr {
             fn source(&self) -> Option<&(dyn Error + 'static)> {
-                match &self.source {
-                    None => None,
-                    Some(source) => Some(&**source as &dyn Error),
-                }
+                self.source.as_ref().map(|source| &**source as &dyn Error)
             }
         }
 
@@ -615,7 +613,7 @@ except Exception as err:
             assert_eq!(format!("{err}"), "Exception: source");
 
             assert!(err.cause(py).is_none());
-        })
+        });
     }
 
     #[test]
@@ -673,7 +671,7 @@ except Exception as err:
 "#,
             );
             assert!(cause.cause(py).is_none());
-        })
+        });
     }
 
     #[test]
@@ -691,6 +689,6 @@ except Exception as err:
             assert_eq!(format!("{err}"), "Exception: source");
 
             assert!(err.source().is_none());
-        })
+        });
     }
 }
