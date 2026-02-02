@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["Juniper Tyree <juniper.tyree@helsinki.fi>"]
 repository = "https://github.com/juntyr/pyo3-error"
 license = "MPL-2.0"
-rust-version = "1.74"
+rust-version = "1.83"
 
 description = "Unified error causality chains across Rust and Python"
 readme = "README.md"

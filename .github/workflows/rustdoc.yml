@@ -30,7 +30,7 @@ jobs:
           RUSTDOCFLAGS="\
             --enable-index-page \
             --generate-link-to-definition \
-            --extern-html-root-url pyo3=https://docs.rs/pyo3/0.27/ \
+            --extern-html-root-url pyo3=https://docs.rs/pyo3/0.28/ \
             -Zunstable-options\
           " cargo doc \
             --all-features \

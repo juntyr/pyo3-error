@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        rust: ["1.74", stable, nightly]
+        rust: ["1.83", stable, nightly]
 
     steps:
       - name: Checkout the Repository
@@ -48,7 +48,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        rust: ["1.74", stable, nightly]
+        rust: ["1.83", stable, nightly]
         python: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
@@ -100,7 +100,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        rust: ["1.74", stable]
+        rust: ["1.83", stable]
 
     steps:
       - name: Checkout the Repository
